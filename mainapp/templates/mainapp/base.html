@@ -1,0 +1,98 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Playfair+Display" rel="stylesheet">
+    
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/checkbox-style.css' %}">
+    {% endblock %}
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src="/js/w3.js"></script> -->
+    <title>
+        NAKS Smolensk main page
+    </title>
+</head>
+
+<body>
+    <main>
+        <!--import-header.html-->
+        <div class="fixed-fix">Fix</div>
+       {% include 'mainapp/includes/header.html' %}
+       <!--header-end-->
+       <div class="main-content">
+           
+           {% include 'mainapp/includes/navbar.html' %}
+           <!-- <div w3-include-html="includes/navbar.html"></div> -->
+           <!--nav-menu-end-->
+           <!-- <div w3-include-html="includes/main-content.html"></div> -->
+           {% include 'mainapp/includes/main-content.html' %}
+        </div>
+        <!--main-content-end-->
+        
+        {% block content%}
+
+        {% endblock %}
+
+        <!--bewelder-ad-footer-start-->
+        <div class="footer__bewelder-ad-footer">
+            <div class="content-container">
+                <div class="row no-margins">
+                    <div class="col-xs-12 col-lg-4 no-gutters">
+                        <div class="footer__ask-question--area--container container disp-flex align-items-start">
+                            <div class="footer__do-you-have-a-question--heading">Возникли вопросы?</div>
+                            <div class="footer__ask-question--button" id="button_ask_question">Задать вопрос</div>
+                            <div class="footer__use-a-question-form--text">Воспользуйтесь формой <b>"Задать вопрос"</b>
+                                и наш специалист ответит Вам в течение 5 минут</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-4 no-gutters">
+                        <div class="footer__bewelder--area--container container disp-flex align-items-start">
+                            <div class="footer__bewelder-area--heading">Работа в области сварки</div>
+                            <div class="footer__bewelder-area-find-job--button">Найти работу</div>
+                            <div class="footer__bewelder-area-bewelder-ru--url">Bewelder.ru</div>
+                            <div class="footer__bewelder-area-post-vacancy--url">или разместить вакансию <i class="fas fa-arrow-right"></i></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-4 no-gutters">
+                        <div class="footer__welding-magazine--area--container container disp-flex align-items-start">
+                            <div class="footer__welding-magazine-area--logo"><img src="/static/img/welder-magazine-logo.png"
+                                    alt="Журнал Сварка и диагностика"></div>
+                            <div class="footer__welding-magazine-area--heading">svarka.naks.ru</div>
+                            <div class="footer__welding-magazine-area--sub-heading">Научно-технический и
+                                производственный журнал по сварке, контролю и диагностике</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- --bewelder-adfooter-end-- -->
+        <!--import-footer-html-->
+        {% include 'mainapp/includes/footer.html' %}
+        {% include 'mainapp/includes/modal-ask-question.html' %}
+        {% include 'mainapp/includes/modal-send-message.html' %}
+        <!-- <div w3-include-html="/includes/footer.html"></div>
+        <div w3-include-html="/includes/modal-ask-question.html"></div>
+        <div w3-include-html="/includes/modal-send-message.html"></div> -->
+
+        <!-- The Modal -->
+
+        <!--import-footer-html-end-->
+    </main>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/modal.js' %}"></script>
+    <script>w3.includeHTML()</script>
+</body>
+
+</html>
