@@ -4,13 +4,13 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10">
             <div id="wrap" class="fixed-container">
                 <div class="main-content__nav-menu--container">
-                    <div class="main-content__nav-menu--menu-item"><a href="/">Главная</a></div>
-                    <div class="main-content__nav-menu--menu-item"><a href="/news">Новости</a></div>
+                    <div class="main-content__nav-menu--menu-item"><a href="{% url "main" %}">Главная</a></div>
+                    <div class="main-content__nav-menu--menu-item"><a href="{% url 'news' %}">Новости</a></div>
                     <div class="main-content__nav-menu--menu-item">О центре</div>
                     <div class="main-content__nav-menu--menu-item">Услуги</div>
                     <div class="main-content__nav-menu--menu-item">Руководящий состав</div>
                     <div class="main-content__nav-menu--menu-item">Документы</div>
-                    <div class="main-content__nav-menu--menu-item"><a href="/contact">Контакты</a></div>
+                    <div class="main-content__nav-menu--menu-item"><a href="{% url "contact" %}">Контакты</a></div>
                     <a class="burger-icon" id="burger">
                             <i class="fa fa-bars"></i>
                           </a>
