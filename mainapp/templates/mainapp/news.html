@@ -2,5 +2,106 @@
 
 
 {% block content %}
-<div class="container mb10">news page</div>
+  <div class="content-container">
+            <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12 col-lg-7">
+                        <div class="heading">Новости</div>
+
+                    {% for post in news %}
+                        <div class="news__tags--container">
+                            <div class="news__date">Опубликовано: {{ post.published_date|date:"d-m-Y" }}г.</div>
+                            <div class="news__tag">
+                            {% for tag in post.tags.all %}
+                            <i class="fas fa-hashtag"></i>
+                            {{ tag.name }} 
+                            {% endfor %}</div>
+                        </div>
+                        <div class="news__news-record-with-picture">
+                            <img src="/static/img/news_pict1.png" alt="bla" class="news__picture">
+                            <div class="news__news-record-with-picture--heading">{{ post.title }}</div>
+                            <div class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></div>
+                        </div>
+
+                    {% endfor %}
+
+                    </div>
+                    <div class="col-xs-12 col-lg-5">
+                        <div class="heading">Документы</div>
+
+                        {% for document in documents %}
+
+                        <div class="news__tags--container">
+                            <div class="news__date">Опубликовано: {{document.created_date|date:"d-m-Y" }}</div>
+                            {% for tag in document.tags.all %} 
+                                <div class="news__tag">
+                                    <i class="fas fa-hashtag"></i> {{ tag.name }}
+                                    </div>
+                                {% endfor %}    
+                        </div>
+                        <div class="news__news-heading">
+                            <div class="news__line-rect"></div>
+                            <div class>
+                                <div class="news__news-heading--text">{{document.title}}
+                                </div>
+                                <a class="news__button--read-more" href="{{ document.document.url }}" target="blank">Открыть <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    
+                        {% endfor %}
+                <!--end-row-->
+            </div>
+            <a class="go-to-the-main-page--button"><i class="fas fa-arrow-left"></i> На главную</a>
+
+        <div class="container-fluid">
+                <div class="row">
+                        <div class="col-xs12 col-lg-4 no-gutters">
+                            <div class="news__article-record-container">
+                                <div class="news__tags--container">
+                                    <div class="news__date">09 Июля 2018</div>
+                                    <div class="news__tag"><i class="fas fa-hashtag"></i> Статья о неразрушающем контроле</div>
+                                </div>
+                                <div class="news__article-record-heading">Особенности неразрушающего контроля</div>
+                                <div class="news__article-record-sub-heading--container">
+                                    <div class="news__article-record-sub-heading">В соответствии с требованиями действующей
+                                        нормативной документации</div>
+                                    <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
+                                </div>
+        
+                            </div>
+                        </div>
+                        <div class="col-xs12 col-lg-4 no-gutters">
+                            <div class="news__article-record-container">
+                                <div class="news__tags--container">
+                                    <div class="news__date">09 Июля 2018</div>
+                                    <div class="news__tag"><i class="fas fa-hashtag"></i>Статья о сварке</div>
+                                </div>
+                                <div class="news__article-record-heading">Применение СМТ технологий в сварке</div>
+                                <div class="news__article-record-sub-heading--container">
+                                    <div class="news__article-record-sub-heading">Во всем мире существует необходимость
+                                        хранения нефти и продуктов</div>
+                                    <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs12 col-lg-4">
+                            <div class="news__article-record-container">
+                                <div class="news__tags--container">
+                                    <div class="news__date">09 Июля 2018</div>
+                                    <div class="news__tag"><i class="fas fa-hashtag"></i> Статья о оценке квалификации</div>
+                                </div>
+                                <div class="news__article-record-heading">Соединение разнородных металлов</div>
+                                <div class="news__article-record-sub-heading--container">
+                                    <div class="news__article-record-sub-heading">Развитие и совершенствование современного
+                                        приборостроения</div>
+                                    <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+
+        </div>
+
 {% endblock %}
