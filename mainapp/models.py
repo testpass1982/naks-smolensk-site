@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
+# from django_resized import ResizedImageField
 
 
 # Create your models here.
@@ -26,16 +28,19 @@ class Category(models.Model):
         return self.name
 
 class Post(models.Model):
-    title = models.CharField(max_length= 200)
-    tags = models.ManyToManyField(Tag)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    text = RichTextUploadingField()
-    created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
+    title = models.CharField(u'Название', max_length= 200)
+    tags = models.ManyToManyField(Tag, verbose_name='Тэги')
+    category = models.ForeignKey(Category, verbose_name='Категория',on_delete=models.CASCADE)
+    author = models.ForeignKey('auth.User', verbose_name='Автор', on_delete=models.CASCADE)
+    text = RichTextUploadingField(verbose_name='Текст')
+    created_date = models.DateTimeField(u'Дата создания', default=timezone.now)
+    published_date = models.DateTimeField(u'Дата публикации', blank=True, null=True)
+    
     class Meta:
-        verbose_name = 'Новость'
-        verbose_name_plural = "Новости"
+        ordering = ['created_date']
+        get_latest_by = ['created_date']
+        verbose_name = 'Страница'
+        verbose_name_plural = "Страницы"
 
     def publish(self):
         self.published_date = timezone.now()
@@ -44,16 +49,38 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-# class File(models.Model):
-#     name = models.CharField(max_length=64)
-#     file = models.FileField(upload_to="files/")
+def upload_to(instance, filename):
+    filename_base, filename_ext = os.path.splitext(filename)
+    return "upload/{post_pk}/{filename}{extension}".format(
+        post_pk=instance.pk,
+        filename=slugify(filename_base),
+        extension=filename_ext.lower(),)
+
+def get_image_filename():
+    return f'image_{slugify(timezone.now())}'
+
+class PostPhoto(models.Model):
+    post = models.ForeignKey(Post, verbose_name=u'новость', related_name='images', on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(u'изображение', upload_to="upload/")
+    title = models.CharField(u'название', max_length=64, blank=True, default=get_image_filename)
+    position = models.PositiveIntegerField(u'Позиция', default=0)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Фото"
+        verbose_name_plural = "Фотографии"
+        ordering = ['position']
+        def __str__(self):
+            return f'{self.post} - {self.image}'
 
 class Document(models.Model):
-    title = models.CharField(max_length=500, blank=True)
-    document = models.FileField(upload_to="documents/")
-    uploaded_at = models.DateTimeField(default=timezone.now)
-    tags = models.ManyToManyField(Tag)
-    created_date = models.DateTimeField(default=timezone.now)
+    title = models.CharField(u'Название',max_length=500, blank=True)
+    document = models.FileField(verbose_name='Документ',upload_to="documents/")
+    uploaded_at = models.DateTimeField(verbose_name='Загружен', default=timezone.now)
+    tags = models.ManyToManyField(Tag, verbose_name='Тэги')
+    created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
 
     class Meta:
         verbose_name = "Документ"
