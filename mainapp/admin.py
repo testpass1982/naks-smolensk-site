@@ -12,15 +12,15 @@ def get_picture_preview(obj):
             src=obj.image.url,
             title=obj.title,
         ))
-    return "(choose a picture and save and continue editing to see the preview)"
+    return "(После загрузки фотографии здесь будет ее миниатюра)"
 get_picture_preview.allow_tags = True
 get_picture_preview.short_description = "Предварительный просмотр:"
 
 class PostPhotoInline(admin.StackedInline):
     model = PostPhoto
     extra = 0
-    fields = ["get_edit_link", "title", "image", "position", get_picture_preview]
-    readonly_fields = ["get_edit_link", get_picture_preview]
+    fields = ['id', "get_edit_link", "title", "image", "position", get_picture_preview]
+    readonly_fields = ['id', "get_edit_link", get_picture_preview]
 
     def get_edit_link(self, obj=None):
         if obj.pk:  # if object has already been saved and has a primary key, show link to it
@@ -33,19 +33,26 @@ class PostPhotoInline(admin.StackedInline):
     get_edit_link.short_description = "Изменить"
     get_edit_link.allow_tags = True
 
+class DocumentInline(admin.StackedInline):
+    model = Document
+    extra = 0
+    fields = ['id', "title", 'document']
+
+
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     # save_on_top = True
-    fields = ['title', 'tags', 'category', 'author', 'text', 'created_date', 'published_date']
+    fields = ['id', 'title', 'tags', 'category', 'author', 'text', 'created_date', 'published_date']
+    readonly_fields = ('id',)
     list_display = ['title', 'category', 'created_date']
-    inlines = [PostPhotoInline]
+    inlines = [PostPhotoInline, DocumentInline]
 
 @admin.register(PostPhoto)
 class PostPhotoAdmin(admin.ModelAdmin):
     # save_on_top = True
-    fields = ["post", "image", "title", "position", get_picture_preview]
-    readonly_fields = [get_picture_preview]
+    fields = ['id', "post", "image", "title", "position", get_picture_preview]
+    readonly_fields = ['id', get_picture_preview]
     list_display=['title', 'post', get_picture_preview]
 
 admin.site.register(Tag)

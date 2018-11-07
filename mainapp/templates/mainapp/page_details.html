@@ -1,0 +1,106 @@
+{% extends 'mainapp/base.html '%}
+
+
+{% block content %}
+<!-- inner-page-here -->
+<div class="content-container">
+    <a class="go-to-the-main-page--button" href="/"><i class="fas fa-arrow-left"></i> На главную</a>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-xl-8">
+                <div class="news-details-post-container">
+                    <div class="disp-flex">
+                        <div class="news-details-date-with-tags"> {{ post.published_date|date:"d-m-Y" }} | 
+                            {% for tag in post.tags.all %}
+                            <i class="fas fa-hashtag"></i>
+                            {{ tag.name }} 
+                            {% endfor %}
+                        </div>
+                        <div class="news-details--buttons--container disp-flex align-items-center">
+                            <div class="news-details--social--buttons--container">
+                                <img class="news-details-social-button" src="/static/img/news-details-facebook-icon.png" alt="Facebook">
+                                <img class="news-details-social-button" src="/static/img/news-details-vk-icon.png" alt="VK">
+                                <img class="news-details-social-button" src="/static/img/news-details-twitter-icon.png" alt="Twitter">
+                                <img class="news-details-social-button" src="/static/img/news-details-google-plus-icon.png"
+                                    alt="Google Plus">
+                            </div>
+                            <div class="news-details--send-buttons-container">
+                                <img class="news-details-social-button" src="/static/img/news-details-send-e-mail-icon.png"
+                                    alt="send via email">
+                                <img class="news-details-social-button" src="/static/img/news-details-print-icon.png" alt="print">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="news-details-post-header">
+                        {{ post.title }}
+                    </div>
+
+                    <div class="news-details-post-text">
+                        {{ post.text|safe}}
+                    </div>
+                    <hr class="news-details-horizontal-bottom-line">
+                    <a class="news-details-attached-doc-button"><i class="fas fa-download"></i>Скачать
+                        документ</a>
+                </div>
+            </div>
+            <div class="col-xs-12 col-xl-4">
+                <div class="news-details-photos-container disp-flex">
+                    {% for image in images %}
+                    <a href="{{ image.image.url }}" target="blank"><img class="news-details-atteched-image" src="{{ image.image.url }}" alt="{{image.title}}"></a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- articles -->
+<div class="row no-margins">
+    <div class="col-xs12 col-lg-4 no-gutters">
+        <div class="news__article-record-container">
+            <div class="news__tags--container">
+                <div class="news__date">09 Июля 2018</div>
+                <div class="news__tag"><i class="fas fa-hashtag"></i> Статья о неразрушающем контроле</div>
+            </div>
+            <div class="news__article-record-heading">Особенности неразрушающего контроля</div>
+            <div class="news__article-record-sub-heading--container">
+                <div class="news__article-record-sub-heading">В соответствии с требованиями действующей
+                    нормативной документации</div>
+                <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xs12 col-lg-4 no-gutters">
+        <div class="news__article-record-container">
+            <div class="news__tags--container">
+                <div class="news__date">09 Июля 2018</div>
+                <div class="news__tag"><i class="fas fa-hashtag"></i>Статья о сварке</div>
+            </div>
+            <div class="news__article-record-heading">Применение СМТ технологий в сварке</div>
+            <div class="news__article-record-sub-heading--container">
+                <div class="news__article-record-sub-heading">Во всем мире существует необходимость
+                    хранения нефти и продуктов</div>
+                <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs12 col-lg-4">
+        <div class="news__article-record-container">
+            <div class="news__tags--container">
+                <div class="news__date">09 Июля 2018</div>
+                <div class="news__tag"><i class="fas fa-hashtag"></i> Статья о оценке квалификации</div>
+            </div>
+            <div class="news__article-record-heading">Соединение разнородных металлов</div>
+            <div class="news__article-record-sub-heading--container">
+                <div class="news__article-record-sub-heading">Развитие и совершенствование современного
+                    приборостроения</div>
+                <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

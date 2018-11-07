@@ -81,6 +81,7 @@ class Document(models.Model):
     uploaded_at = models.DateTimeField(verbose_name='Загружен', default=timezone.now)
     tags = models.ManyToManyField(Tag, verbose_name='Тэги')
     created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
+    post = models.ForeignKey(Post, verbose_name='Страница', blank=True, default='', on_delete=models.SET_NULL, null=True)
 
     class Meta:
         verbose_name = "Документ"

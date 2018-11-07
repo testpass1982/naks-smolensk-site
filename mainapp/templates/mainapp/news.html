@@ -33,7 +33,7 @@
                         {% for document in documents %}
 
                         <div class="news__tags--container">
-                            <div class="news__date">Опубликовано: {{document.created_date|date:"d-m-Y" }}</div>
+                            <div class="news__date">Опубликовано: {{ document.created_date|date:"d-m-Y" }}</div>
                             {% for tag in document.tags.all %} 
                                 <div class="news__tag">
                                     <i class="fas fa-hashtag"></i> {{ tag.name }}
