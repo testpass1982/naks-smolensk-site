@@ -1474,7 +1474,7 @@ body {
   border-radius: 3px;
   text-align: center;
   white-space: nowrap;
-  max-width: 180px;
+  /* max-width: 180px; */
 }
 .news-details-attached-doc-button:hover {
   color: white;

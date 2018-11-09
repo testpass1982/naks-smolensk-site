@@ -36,10 +36,12 @@ def details(request, pk):
     post = get_object_or_404(Post, pk=pk)
     title = post.title
     attached_images = PostPhoto.objects.filter(post__pk=pk)
+    attached_documents = Document.objects.filter(post__pk=pk)
     content = {
         'title': title,
         'post': post,
-        'images': attached_images
+        'images': attached_images,
+        'documents': attached_documents
         # 'post_text': format_html(post.text)
     }
 

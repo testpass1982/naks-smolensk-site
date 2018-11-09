@@ -39,8 +39,16 @@
                         {{ post.text|safe}}
                     </div>
                     <hr class="news-details-horizontal-bottom-line">
-                    <a class="news-details-attached-doc-button"><i class="fas fa-download"></i>Скачать
-                        документ</a>
+                    {% if documents %}
+                    Прирепленные файлы:
+                        {% for document in documents %}
+                            <div class="container">
+                                <div class="row align-items-center">
+                                    <a class="news-details-attached-doc-button" href="{{document.document.url}}" target="blank"><i class="fas fa-download"></i>{{document.title}}</a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {% endif %}
                 </div>
             </div>
             <div class="col-xs-12 col-xl-4">
