@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 
-from .models import Post, Category, Tag, Document, PostPhoto
+from .models import Post, Category, Tag, Document, PostPhoto, Article
 # Register your models here.
 
 def get_picture_preview(obj):
@@ -58,3 +58,4 @@ class PostPhotoAdmin(admin.ModelAdmin):
 admin.site.register(Tag)
 admin.site.register(Category)
 admin.site.register(Document)
+admin.site.register(Article)

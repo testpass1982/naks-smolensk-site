@@ -49,6 +49,27 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+class Article(models.Model):
+    title = models.CharField(u'Название', max_length= 200)
+    tags = models.ManyToManyField(Tag, verbose_name='Тэги')
+    author = models.ForeignKey('auth.User', verbose_name='Автор', on_delete=models.CASCADE)
+    text = RichTextUploadingField(verbose_name='Текст')
+    created_date = models.DateTimeField(u'Дата создания', default=timezone.now)
+    published_date = models.DateTimeField(u'Дата публикации', blank=True, null=True)
+    
+    class Meta:
+        ordering = ['created_date']
+        get_latest_by = ['created_date']
+        verbose_name = 'Статья'
+        verbose_name_plural = "Статьи"
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
+
 def upload_to(instance, filename):
     filename_base, filename_ext = os.path.splitext(filename)
     return "upload/{post_pk}/{filename}{extension}".format(
@@ -89,6 +110,21 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+# class AgreementDocument(models.Model):
+#     title = models.CharField(u'Название',max_length=500, blank=True)
+#     document = models.FileField(verbose_name='Документ',upload_to="documents/")
+#     uploaded_at = models.DateTimeField(verbose_name='Загружен', default=timezone.now)
+#     tags = models.ManyToManyField(Tag, verbose_name='Тэги')
+#     created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
+#     # post = models.ForeignKey(Post, verbose_name='Страница', blank=True, default='', on_delete=models.SET_NULL, null=True)
+
+#     class Meta:
+#         verbose_name = "Документ"
+#         verbose_name_plural = "Документы"
+
+#     def __str__(self):
+#         return self.title
     
 
     

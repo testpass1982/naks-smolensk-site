@@ -3,7 +3,13 @@
 
 {% block content %}
   <div class="content-container">
-            <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
+            <div class="d-flex align-items-center">
+                <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
+                <a href="{% url 'create' 'post' %}" class="btn btn-link">Создать новость</a>
+                <a href="{% url 'create' 'article' %}"" class="btn btn-link">Создать статью</a>
+                <a href="{% url 'create' 'document' %}" class="btn btn-link">Загрузить документ</a>
+            </div>
+
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xs-12 col-lg-7">
@@ -21,7 +27,7 @@
                         <div class="news__news-record-with-picture">
                             <img src="/static/img/news_pict1.png" alt="bla" class="news__picture">
                             <div class="news__news-record-with-picture--heading">{{ post.title }}</div>
-                            <div class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></div>
+                            <a href="{% url 'post_details' pk=post.pk %}" class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></a>
                         </div>
 
                     {% endfor %}
