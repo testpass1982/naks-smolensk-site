@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.html import format_html
-from django.http import Http404, HttpResponse
+from django.urls import reverse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.core.exceptions import ValidationError
 from .models import Post, PostPhoto, Tag, Category, Document
 from .forms import PostForm, ArticleForm, DocumentForm
 
@@ -59,20 +61,23 @@ def create_factory(request, content_type):
     
     title = f'Create new {content_type}'
 
+    forms = {'post' : PostForm, 'article': ArticleForm, 'document': DocumentForm}
     
-    if request.method == "POST":
-        forms = {'post' : PostForm(request.POST), 'article': ArticleForm(request.POST), 'document': DocumentForm(request.POST)}
-        form = forms[content_type]
+    if request.method == "POST" or request.method == "FILES":
+        form_Class = forms[content_type]
+        form = form_Class(request.POST)
         if form.is_valid():
             content = form.save(commit=False)
             content.save()
             return redirect('news')
+        else:
+            raise ValidationError
     else:
-        forms = {'post' : PostForm(), 'article': ArticleForm(), 'document': DocumentForm()}
+        form_Class = forms[content_type]
         if content_type in forms:
             context = {
                 'title': title,
-                'form': forms[content_type]
+                'form': form_Class()
             }
 
         else: 

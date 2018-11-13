@@ -1,34 +1,51 @@
 from django import forms
+from django.core.validators import FileExtensionValidator
+import os
 
 from .models import Post, Article, Document
 
-class PostForm(forms.ModelForm):
+class ContentForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
     class Meta:
+        fieldset  = {
+            'post_form_fields' : ('title', 'tags', 'category', 'author', 'text', 'created_date', 'published_date'),
+            'article_form_fields' : ('title', 'tags', 'author', 'text', 'created_date', 'published_date'),
+            'document_form_fields' : ('title', 'document', 'tags', 'created_date', 'uploaded_at')
+        }
+
+class PostForm(ContentForm):
+
+    class Meta(ContentForm.Meta):
         model = Post
-        fields = ('title', 'tags', 'category', 'author', 'text', 'created_date', 'published_date')
+        fields = ContentForm.Meta.fieldset['post_form_fields']
 
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+class ArticleForm(ContentForm):
 
-class ArticleForm(forms.ModelForm):
-
-    class Meta:
+    class Meta(ContentForm.Meta):
         model = Article
-        fields = ('title', 'tags', 'author', 'text', 'created_date', 'published_date')
-    def __init__(self, *args, **kwargs):
-        super(ArticleForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+        fields = ContentForm.Meta.fieldset['article_form_fields']
 
-class DocumentForm(forms.ModelForm):
+class DocumentForm(ContentForm):
+    ALOWED_TYPES = ['jpg', 'jpeg', 'doc', 'docx', 'pdf', 'xls', 'xlsx']
 
-    class Meta:
+    class Meta(ContentForm.Meta):
         model = Document
-        fields = ('title', 'document', 'tags', 'created_date')
-    def __init__(self, *args, **kwargs):
-        super(DocumentForm, self).__init__(*args, **kwargs)
-        for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+        fields = ContentForm.Meta.fieldset['document_form_fields']
+
+    def clean(self):
+        document = self.cleaned_data.get('document', None)
+        if not document:
+            raise forms.ValidationError('Missing document file')
+        try:
+            extension = os.path.splitext(document.name)[1][1:].lower()
+            if extension in self.ALOWED_TYPES:
+                return document
+            else:
+                raise forms.ValidationError('File types is not allowed')
+        except Exception as e:
+            raise forms.ValidationError('Can not identify file type')
