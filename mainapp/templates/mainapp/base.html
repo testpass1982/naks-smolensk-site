@@ -25,6 +25,13 @@
             {{ title|title }}
         {% endblock%}
     </title>
+    <script>
+        {% if messages %}
+            {% for message in messages %}
+                alert(message)
+            {% endfor %}
+        {% endif %}
+    </script>
 </head>
 
 <body>

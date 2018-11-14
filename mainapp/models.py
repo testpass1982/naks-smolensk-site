@@ -36,12 +36,13 @@ class ContentMixin(models.Model):
     created_date = models.DateTimeField(u'Дата создания', default=timezone.now)
     text = RichTextUploadingField(verbose_name='Текст')
     author = models.ForeignKey('auth.User', verbose_name='Автор', on_delete=models.CASCADE)
+    publish_on_main_page = models.BooleanField(verbose_name="Опубликовать на главной", default=False)
 
     class Meta:
         abstract = True
 
 class Post(ContentMixin):
-    
+    #child of ContentMixin
     category = models.ForeignKey(Category, verbose_name='Категория',on_delete=models.CASCADE)
     
     class Meta:
@@ -58,7 +59,7 @@ class Post(ContentMixin):
         return self.title
 
 class Article(ContentMixin):
-    
+    #child of ContentMixin
     class Meta:
         ordering = ['created_date']
         get_latest_by = ['created_date']
@@ -74,11 +75,13 @@ class Article(ContentMixin):
 
 class Document(models.Model):
     title = models.CharField(u'Название', max_length=500)
-    document = models.FileField(verbose_name='Документ', upload_to="documents/", validators = [FileExtensionValidator(message="Something goes wrong")])
+    document = models.FileField(verbose_name='Документ', upload_to="documents/", 
+        validators = [FileExtensionValidator(allowed_extensions = ['pdf', 'docx', 'doc', 'jpg', 'jpeg'], message="Неправильный тип файла, используйте PDF, DOCX, DOC, JPG, JPEG")])
     uploaded_at = models.DateTimeField(verbose_name='Загружен', default=timezone.now)
     tags = models.ManyToManyField(Tag, verbose_name='Тэги', blank=True)
     created_date = models.DateTimeField(default=timezone.now, verbose_name='Дата создания')
     post = models.ForeignKey(Post, verbose_name='Страница', blank=True, default='', on_delete=models.SET_NULL, null=True)
+    publish_on_main_page = models.BooleanField(verbose_name="Опубиковать на главной", default=False)
     
     class Meta:
         verbose_name = "Документ"

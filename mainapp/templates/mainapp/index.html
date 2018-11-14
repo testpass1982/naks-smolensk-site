@@ -24,7 +24,7 @@
                             <div class="news__news-heading--text">
                             {{ document.title }}
                             </div>
-                            <a class="news__button--read-more" href="{{ document.document.url }}">Открыть <i class="fas fa-arrow-right"></i></a>
+                            <a class="news__button--read-more" href="{{ document.document.url }}" target="blank">Открыть <i class="fas fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </div>
@@ -34,8 +34,8 @@
             <!--row-end---->
 
 
-            <div class="row no-margins">
-                    {% for post in news %}            
+            <div class="row row-eq-height no-margins">
+                    {% for post, picture in posts.items %}            
                 <div class="col-xs-12 col-lg-4 no-gutters">
                     <div class="news__tags--container">
                         <div class="news__date"> {{ post.published_date|date:"d-m-Y" }} </div>
@@ -47,7 +47,13 @@
                         </div>
                     </div>
                     <div class="news__news-record-with-picture">
-                        <img src="/static/img/news_pict1.png" alt="bla" class="news__picture">
+                        <img src="
+                        {% if picture != None %}
+                            {{ picture.image.url }}
+                        {% else %}
+                            /static/img/news_pict1.png
+                        {% endif %}"
+                        alt="{{ post.title }}" class="news__picture">
                         <div class="news__news-record-with-picture--heading">{{ post.title }}</div>
                         <a class="news__news-record-with-picture--button" href="{% url 'post_details' pk=post.pk %}">Подробнее <i class="fas fa-arrow-right"></i></a>
                     </div>

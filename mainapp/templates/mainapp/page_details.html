@@ -40,6 +40,7 @@
                     </div>
                     <hr class="news-details-horizontal-bottom-line">
                     {% if documents %}
+
                     Прирепленные файлы:
                         {% for document in documents %}
                             <div class="container">
@@ -48,14 +49,22 @@
                                 </div>
                             </div>
                         {% endfor %}
+
                         {% endif %}
                 </div>
             </div>
             <div class="col-xs-12 col-xl-4">
                 <div class="news-details-photos-container disp-flex">
+
+                    {% if images %}
+
                     {% for image in images %}
                     <a href="{{ image.image.url }}" target="blank"><img class="news-details-atteched-image" src="{{ image.image.url }}" alt="{{image.title}}"></a>
                     {% endfor %}
+                    
+                    {% else %}
+                    <div class="alert alert-warning">Фотографии для данной публикации отсутствуют</div>
+                    {% endif %}
                 </div>
             </div>
         </div>

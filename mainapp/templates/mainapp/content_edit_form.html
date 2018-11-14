@@ -5,7 +5,7 @@
 <div class="content-container">
 
     <h2>{{ title }}</h2>
-    <form method="POST" class='post-form'>
+    <form method="POST" enctype="multipart/form-data" class='post-form'>
 
         {% csrf_token %}
 

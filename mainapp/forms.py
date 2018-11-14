@@ -37,15 +37,15 @@ class DocumentForm(ContentForm):
         model = Document
         fields = ContentForm.Meta.fieldset['document_form_fields']
 
-    def clean(self):
-        document = self.cleaned_data.get('document', None)
-        if not document:
-            raise forms.ValidationError('Missing document file')
-        try:
-            extension = os.path.splitext(document.name)[1][1:].lower()
-            if extension in self.ALOWED_TYPES:
-                return document
-            else:
-                raise forms.ValidationError('File types is not allowed')
-        except Exception as e:
-            raise forms.ValidationError('Can not identify file type')
+    # def clean(self):
+    #     document = self.cleaned_data.get('document', None)
+    #     if not document:
+    #         raise forms.ValidationError('Missing document file')
+    #     try:
+    #         extension = os.path.splitext(document.name)[1][1:].lower()
+    #         if extension in self.ALOWED_TYPES:
+    #             return document
+    #         else:
+    #             raise forms.ValidationError('File types is not allowed')
+    #     except Exception as e:
+    #         raise forms.ValidationError('Can not identify file type')

@@ -3,6 +3,7 @@ from django.utils.html import format_html
 from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
+from django.contrib import messages
 from .models import Post, PostPhoto, Tag, Category, Document
 from .forms import PostForm, ArticleForm, DocumentForm
 
@@ -10,14 +11,17 @@ from .forms import PostForm, ArticleForm, DocumentForm
 def main(request):
     title = "Главная - НАКС Смоленск"
     # doc_count = len(Document.objects.all())
-    main_page_docs = Document.objects.all().order_by('-created_date')[:3]
-    main_page_news = Post.objects.all().order_by('-published_date')[:3]
-    #articles go here
+    docs = Document.objects.filter(publish_on_main_page=True).order_by('-created_date')[:3]
+    main_page_news = Post.objects.filter(publish_on_main_page=True).order_by('-published_date')[:3]
+    posts = {}
+    for post in main_page_news:
+        posts[post]=PostPhoto.objects.filter(post__pk=post.pk).first()
+
 
     content = {
         'title': title,
-        'news': main_page_news,
-        'docs': main_page_docs
+        'posts': posts,
+        'docs': docs,
     }
     
     return render(request, 'mainapp/index.html', content)
@@ -25,12 +29,16 @@ def main(request):
 def news(request):
     title = "Новости АЦ"
     all_news = Post.objects.all().order_by('-created_date')
+    posts = {}
+    for post in all_news:
+        posts[post] = PostPhoto.objects.filter(post__pk=post.pk).first()
+    print(posts)
     all_documents = Document.objects.all()
 
 
     content = {
         'title': title,
-        'news': all_news,
+        'news': posts,
         'documents': all_documents
     }
 
@@ -61,17 +69,31 @@ def create_factory(request, content_type):
     
     title = f'Create new {content_type}'
 
-    forms = {'post' : PostForm, 'article': ArticleForm, 'document': DocumentForm}
+    forms = {   
+                'post' : PostForm, 
+                'article': ArticleForm, 
+                'document': DocumentForm
+            }
     
-    if request.method == "POST" or request.method == "FILES":
+    if request.method == "POST":
+        
         form_Class = forms[content_type]
+        
         form = form_Class(request.POST)
+        if content_type == 'document':
+            form = form_Class(request.POST, request.FILES)
+        
         if form.is_valid():
             content = form.save(commit=False)
             content.save()
             return redirect('news')
         else:
-            raise ValidationError
+            messages.error(request, "Error")
+            context = {
+                'title': 'Исправьте ошибки формы',
+                'form': form
+            }
+            return render(request, 'mainapp/content_edit_form.html', context)
     else:
         form_Class = forms[content_type]
         if content_type in forms:

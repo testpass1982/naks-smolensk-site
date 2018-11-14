@@ -37,15 +37,21 @@ class DocumentInline(admin.StackedInline):
     model = Document
     extra = 0
     fields = ['id', "title", 'document']
+    list_display = ['title', 'publish_on_main_page']
+
+
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ['title', 'publish_on_main_page']
 
 
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     # save_on_top = True
-    fields = ['id', 'title', 'tags', 'category', 'author', 'text', 'created_date', 'published_date']
+    fields = ['id', 'title', 'tags', 'category', 'author', 'text', 'created_date', 'published_date', 'publish_on_main_page']
     readonly_fields = ('id',)
-    list_display = ['title', 'category', 'created_date']
+    list_display = ['title', 'category', 'created_date', 'publish_on_main_page']
     inlines = [PostPhotoInline, DocumentInline]
 
 @admin.register(PostPhoto)
@@ -57,5 +63,4 @@ class PostPhotoAdmin(admin.ModelAdmin):
 
 admin.site.register(Tag)
 admin.site.register(Category)
-admin.site.register(Document)
 admin.site.register(Article)
