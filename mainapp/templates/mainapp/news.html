@@ -12,34 +12,34 @@
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xs-12 col-lg-6">
+                    <div class="col-xs-12 col-lg-8">
                         <div class="heading">Новости</div>
 
-                    {% for post, pictures in news.items %}
+                    {% for element in news %}
                         <div class="news__tags--container">
-                            <div class="news__date">{{ post.published_date|date:"d-m-Y" }}</div>
+                            <div class="news__date">{{ element.post.published_date|date:"d-m-Y" }}</div>
                             <div class="news__tag">
-                            {% for tag in post.tags.all %}
+                            {% for tag in element.post.tags.all %}
                             <i class="fas fa-hashtag"></i>
                             {{ tag.name }} 
                             {% endfor %}</div>
                         </div>
                         <div class="news__news-record-with-picture">
                             <img src="
-                            {% if picture != None %}
-                            {{ picture.image.url }}
+                            {% if element.picture != None %}
+                            {{ element.picture.image.url }}
                             {% else %}
                             /static/img/news_pict1.png
                             {% endif %}
                             " alt="bla" class="news__picture">
-                            <div class="news__news-record-with-picture--heading">{{ post.title }}</div>
-                            <a href="{% url 'post_details' pk=post.pk %}" class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></a>
+                            <div class="news__news-record-with-picture--heading">{{ element.post.title }}</div>
+                            <a href="{% url 'post_details' pk=element.post.pk %}" class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></a>
                         </div>
 
                     {% endfor %}
 
                     </div>
-                    <div class="col-xs-12 col-lg-6">
+                    <div class="col-xs-12 col-lg-4">
                         <div class="heading">Документы</div>
 
                         {% for document in documents %}
@@ -64,7 +64,33 @@
                         {% endfor %}
                 <!--end-row-->
             </div>
-            <a class="go-to-the-main-page--button"><i class="fas fa-arrow-left"></i> На главную</a>
+
+            <!-- pagination -->
+
+            <div class="container-fluid mt-4">
+                <nav>
+                    <ul class="pagination">
+
+                    {% if news.has_previous %}
+                      <li class="page-item"><a class="page-link" href="?page=1">&laquo; Первая</a></li>
+                      <li class="page-item"><a class="page-link" href="?page={{ news.previous_page_number }}">Предыдущая</a></li>
+                    {% endif %}
+
+                      <li class="page-item active"><a class="page-link" href="?page={{ news.number }}">Страница {{ news.number }} из {{ news.paginator.num_pages }}</a></li>
+                    
+                    {% if news.has_next %}
+                      <li class="page-item"><a class="page-link" href="?page={{ news.next_page_number }}">Следующая</a></li>
+                      <li class="page-item"><a class="page-link" href="?page={{ news.paginator.num_pages }}">Последняя &raquo;</a></li>
+                    {% endif %}
+
+                    </ul>
+                  </nav>
+            </div>
+
+            <!-- pagination -->
+
+
+            <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
 
         <div class="container-fluid">
                 <div class="row">

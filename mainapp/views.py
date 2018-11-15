@@ -4,19 +4,18 @@ from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, PostPhoto, Tag, Category, Document
 from .forms import PostForm, ArticleForm, DocumentForm
 
 # Create your views here.
 def main(request):
     title = "Главная - НАКС Смоленск"
-    # doc_count = len(Document.objects.all())
     docs = Document.objects.filter(publish_on_main_page=True).order_by('-created_date')[:3]
     main_page_news = Post.objects.filter(publish_on_main_page=True).order_by('-published_date')[:3]
     posts = {}
     for post in main_page_news:
         posts[post]=PostPhoto.objects.filter(post__pk=post.pk).first()
-
 
     content = {
         'title': title,
@@ -29,12 +28,11 @@ def main(request):
 def news(request):
     title = "Новости АЦ"
     all_news = Post.objects.all().order_by('-created_date')
-    posts = {}
-    for post in all_news:
-        posts[post] = PostPhoto.objects.filter(post__pk=post.pk).first()
-    print(posts)
-    all_documents = Document.objects.all()
-
+    post_list = [dict({'post': post, 'picture': PostPhoto.objects.filter(post__pk=post.pk).first()}) for post in all_news]
+    all_documents = Document.objects.all().order_by('-created_date')[:5]
+    paginator = Paginator(post_list, 4) #показываем несколько новостей на странице
+    page = request.GET.get('page')
+    posts = paginator.get_page(page)
 
     content = {
         'title': title,
