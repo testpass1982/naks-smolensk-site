@@ -55,7 +55,7 @@
                         {% endif %}"
                         alt="{{ post.title }}" class="news__picture">
                         <div class="news__news-record-with-picture--heading">{{ post.title }}</div>
-                        <a class="news__news-record-with-picture--button" href="{% url 'post_details' pk=post.pk %}">Подробнее <i class="fas fa-arrow-right"></i></a>
+                        <a class="news__news-record-with-picture--button" href="{% url 'post_details'%}?content_type=post&pk={{ post.pk }}">Подробнее <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
                 {% endfor %}
@@ -67,49 +67,28 @@
                 <div class="heading">Статьи</div>
             </div>
             <div class="row no-margins">
+                {% for article in articles %}
                 <div class="col-xs12 col-lg-4 no-gutters">
                     <div class="news__article-record-container">
+                        
                         <div class="news__tags--container">
-                            <div class="news__date">09 Июля 2018</div>
-                            <div class="news__tag"><i class="fas fa-hashtag"></i> Статья о неразрушающем контроле</div>
+                            <div class="news__date">{{article.published_date|date:"d-m-Y"}}</div>
+                            
+                            {% for tag in article.tags.all %}    
+                            <div class="news__tag"><i class="fas fa-hashtag"></i> {{tag.name}}</div>
+                            {% endfor %}
+                        
                         </div>
-                        <div class="news__article-record-heading">Особенности неразрушающего контроля</div>
+
+                        <div class="news__article-record-heading">{{article.title}}</div>
                         <div class="news__article-record-sub-heading--container">
-                            <div class="news__article-record-sub-heading">В соответствии с требованиями действующей
-                                нормативной документации</div>
-                            <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
+                            <div class="news__article-record-sub-heading">{{article.short_description}}</div>
+                            <a class="news__article-record__read-more-button" href="{% url 'post_details'%}?content_type=article&pk={{ article.pk }}">Читать <i class="fas fa-arrow-right"></i></a>
                         </div>
 
                     </div>
                 </div>
-                <div class="col-xs12 col-lg-4 no-gutters">
-                    <div class="news__article-record-container">
-                        <div class="news__tags--container">
-                            <div class="news__date">09 Июля 2018</div>
-                            <div class="news__tag"><i class="fas fa-hashtag"></i>Статья о сварке</div>
-                        </div>
-                        <div class="news__article-record-heading">Применение СМТ технологий в сварке</div>
-                        <div class="news__article-record-sub-heading--container">
-                            <div class="news__article-record-sub-heading">Во всем мире существует необходимость
-                                хранения нефти и продуктов</div>
-                            <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs12 col-lg-4">
-                    <div class="news__article-record-container">
-                        <div class="news__tags--container">
-                            <div class="news__date">09 Июля 2018</div>
-                            <div class="news__tag"><i class="fas fa-hashtag"></i> Статья о оценке квалификации</div>
-                        </div>
-                        <div class="news__article-record-heading">Соединение разнородных металлов</div>
-                        <div class="news__article-record-sub-heading--container">
-                            <div class="news__article-record-sub-heading">Развитие и совершенствование современного
-                                приборостроения</div>
-                            <div class="news__article-record__read-more-button">Читать <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
             <!--row-articles-end-->
         </div>

@@ -60,6 +60,9 @@ class Post(ContentMixin):
 
 class Article(ContentMixin):
     #child of ContentMixin
+
+    short_description = models.CharField(u'Краткое описание', max_length=200, blank=True)
+
     class Meta:
         ordering = ['created_date']
         get_latest_by = ['created_date']
