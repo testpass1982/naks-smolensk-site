@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 
-from .models import Post, Category, Tag, Document, PostPhoto, Article
+from .models import Post, Category, Tag, Document, PostPhoto, Article, Message
 # Register your models here.
 
 
@@ -78,3 +78,4 @@ class PostPhotoAdmin(admin.ModelAdmin):
 
 admin.site.register(Tag)
 admin.site.register(Category)
+admin.site.register(Message)

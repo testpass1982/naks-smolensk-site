@@ -27,6 +27,7 @@ urlpatterns = [
     path('create/<slug:content_type>', mainapp.create_factory, name='create'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
+    path('messages/', mainapp.messages, name = 'messages'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

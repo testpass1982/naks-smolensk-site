@@ -641,7 +641,7 @@ body {
 }
 
 .news__date {
-  flex: 0 0 20%;
+  flex: 1 0;
 }
 @media screen and (max-width: 380px) {
   .news__date {
@@ -651,7 +651,7 @@ body {
 
 .news__tag {
   text-align: right;
-  flex: 0 0 80%;
+  flex: 1 0;
 }
 @media screen and (max-width: 380px) {
   .news__tag {

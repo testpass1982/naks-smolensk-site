@@ -33,7 +33,7 @@
                             {% endif %}
                             " alt="bla" class="news__picture">
                             <div class="news__news-record-with-picture--heading">{{ element.post.title }}</div>
-                            <a href="{% url 'post_details' pk=element.post.pk %}" class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></a>
+                            <a href="{% url 'post_details' %}?content_type=post&pk={{element.post.pk}}" class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></a>
                         </div>
 
                     {% endfor %}

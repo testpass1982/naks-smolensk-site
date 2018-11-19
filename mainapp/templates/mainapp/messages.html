@@ -1,0 +1,9 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+        <div class="content-container">
+            {% for message in messages %}
+            <div class="alert alert-primary">{{ message.title }} | {{ message.sender_phone }} | {{ message.sender_email }}</div>
+            {% endfor %}
+        </div>
+{% endblock %}

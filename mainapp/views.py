@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.html import format_html
+from django.utils.html import format_html, escape
 from django.urls import reverse
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post, PostPhoto, Tag, Category, Document, Article
+from .models import Post, PostPhoto, Tag, Category, Document, Article, Message
 from .forms import PostForm, ArticleForm, DocumentForm
 
 # Create your views here.
@@ -31,7 +31,6 @@ def main(request):
     }
 
     return render(request, 'mainapp/index.html', content)
-
 
 def news(request):
     title = "Новости АЦ"
@@ -75,25 +74,18 @@ def details(request):
             'documents': attached_documents
             # 'post_text': format_html(post.text)
         }
-        # print(post_content)
     if content == 'article':
         tags_pk_list = [tag.pk for tag in obj.tags.all()]
-        print(tags_pk_list)
-        related_articles = Article.objects.filter(tags__in=tags_pk_list)
-
-        print(related_articles)
+        related_articles = Article.objects.filter(tags__in=tags_pk_list).exclude(pk=pk).distinct()
         post_content = {
-            'post': obj
+            'post': obj,
+            'related': related_articles
         }
     
     context = common_content.copy()
     context.update(post_content)        
 
     return render(request, 'mainapp/page_details.html', context)
-
-
-def contact(request):
-    return render(request, 'mainapp/contact.html')
 
 
 def create_factory(request, content_type):
@@ -142,3 +134,22 @@ def create_factory(request, content_type):
             raise Http404
 
         return render(request, 'mainapp/content_edit_form.html', context)
+
+def contact(request):
+    if request.method == 'POST':
+        print(request.POST)
+        data = request.POST.getlist('name')
+        request.POST.update({'name': 'Tolik'})
+        # print(request.META)
+        context = {'request': data}
+    return render(request, 'mainapp/contact.html', context)
+
+def messages(request):
+    # html = '<h1>I\'m working</h1>'
+    # return HttpResponse(html)
+    messages_list = Message.objects.all()
+    
+    context = {
+        'messages': messages_list
+    }
+    return render(request, 'mainapp/messages.html', context)

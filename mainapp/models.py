@@ -117,8 +117,24 @@ class PostPhoto(models.Model):
         verbose_name = "Фото"
         verbose_name_plural = "Фотографии"
         ordering = ['position']
-        def __str__(self):
-            return f'{self.post} - {self.image}'
+    def __str__(self):
+        return f'{self.post} - {self.image}'
+
+class Message(models.Model):
+    title = models.CharField(u'Заголовок', max_length=64, blank=True)
+    typeof = models.CharField(u'Тип сообщения', max_length=64, blank=True)
+    params = models.CharField(u'Параметры сообщения', max_length=512, blank=True)
+    sender_email = models.EmailField(u'Адрес электронной почты', max_length=64, blank=True)
+    sender_phone = models.CharField(u'Телефон', max_length=64, blank=True)
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+    def __str__(self):
+        return self.title
+
+        
 
 
     

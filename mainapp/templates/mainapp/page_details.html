@@ -54,17 +54,31 @@
                 </div>
             </div>
             <div class="col-xs-12 col-xl-4">
-                <div class="news-details-photos-container disp-flex">
+                <div class="news-details-photos-container">
+
+                    {% if related %}
+                    <h4>Еще статьи с тегами 
+                            {% for tag in post.tags.all %}
+                                <div class="badge badge-secondary">
+                                    <i class="fas fa-hashtag"></i>
+                                    {{ tag.name }} 
+                                </div>
+                            {% endfor %}
+                    </h4>
+                    {% for article in related %}
+                        <a class="alert alert-primary" href="{% url 'post_details' %}?content_type=article&pk={{article.pk}}">{{ article.title }}</a>
+                    {% endfor %}
+                    {% endif %}
 
                     {% if images %}
 
                     {% for image in images %}
                     <a href="{{ image.image.url }}" target="blank"><img class="news-details-atteched-image" src="{{ image.image.url }}" alt="{{image.title}}"></a>
                     {% endfor %}
-                    
                     {% else %}
                     <div class="alert alert-warning">Фотографии для данной публикации отсутствуют</div>
                     {% endif %}
+                    
                 </div>
             </div>
         </div>
