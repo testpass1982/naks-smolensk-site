@@ -43,10 +43,13 @@ def news(request):
     page = request.GET.get('page')
     posts = paginator.get_page(page)
 
+    articles = Article.objects.all().order_by('-created_date')[:3]
+
     content = {
         'title': title,
         'news': posts,
-        'documents': all_documents
+        'documents': all_documents,
+        'bottom_related': articles
     }
 
     return render(request, 'mainapp/news.html', content)
@@ -71,7 +74,8 @@ def details(request):
         post_content = {
             'post': obj,
             'images': attached_images,
-            'documents': attached_documents
+            'documents': attached_documents,
+            'bottom_related': Article.objects.all().order_by('-created_date')[:3]
             # 'post_text': format_html(post.text)
         }
     if content == 'article':
@@ -79,9 +83,10 @@ def details(request):
         related_articles = Article.objects.filter(tags__in=tags_pk_list).exclude(pk=pk).distinct()
         post_content = {
             'post': obj,
-            'related': related_articles
+            'related': related_articles,
+            'bottom_related': related_articles.order_by('-created_date')[:3]
         }
-    
+
     context = common_content.copy()
     context.update(post_content)        
 
@@ -139,7 +144,7 @@ def contact(request):
     if request.method == 'POST':
         print(request.POST)
         data = request.POST.getlist('name')
-        request.POST.update({'name': 'Tolik'})
+        # request.POST.update({'name': 'Tolik'})
         # print(request.META)
         context = {'request': data}
     return render(request, 'mainapp/contact.html', context)
