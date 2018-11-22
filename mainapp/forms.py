@@ -38,7 +38,7 @@ class DocumentForm(ContentForm):
         fields = ContentForm.Meta.fieldset['document_form_fields']
 
 class SendMessageForm(forms.Form):
-    name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
+    name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
     phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'modal__form_input'}))
     params = forms.CharField(max_length=128)
@@ -46,14 +46,17 @@ class SendMessageForm(forms.Form):
     pdata = forms.BooleanField(initial=True, required=True, widget=forms.CheckboxInput(attrs={'class': 'checkmark'}))
 
 class SubscribeForm(forms.Form):
-    email = forms.CharField()
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'main-footer__subscribe-email--input', 'placeholder': 'Введите e-mail'}))
+
 
 class AskQuestionForm(forms.Form):
-    name = forms.CharField(max_length=20)
-    phone = forms.CharField(max_length=20)
-    email = forms.EmailField()
-    comment = forms.CharField(max_length=256)
-    pdata = forms.BooleanField(required=True)
+    name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
+    phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'modal__form_input'}))
+    comment = forms.CharField(required=False, max_length=256, widget=forms.Textarea(attrs={'class': 'modal__form_textarea'}))
+    pdata = forms.BooleanField(
+        error_messages={'required': 'Вы должны принять условия обработки персональных данных в соответствии с 152-ФЗ'},
+        initial=True, required=True, widget=forms.CheckboxInput(attrs={'class': 'checkmark'}))
 
     # def clean(self):
     #     document = self.cleaned_data.get('document', None)

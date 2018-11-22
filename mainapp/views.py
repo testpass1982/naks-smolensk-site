@@ -11,14 +11,38 @@ from .forms import PostForm, ArticleForm, DocumentForm, SendMessageForm, Subscri
 
 # Create your views here.
 class MessageModelAdapter:
-    def __init__(self, **data):
-        if 'send_message_button' in data.items():
+    def __init__(self, data):
+        if 'send_message_button' in data:
             self.title = data['name']
             self.typeof = 'Заявка'
-            self.params = data['params']
+            self.params = {
+                    'attsv' : 'attsv' in data,
+                    'attsp': 'attsv' in data,
+                    'attso': 'attso' in data,
+                    'attst': 'attst' in data,
+                    'nok': 'nok' in data
+                    }
             self.sender_email = data['email']
             self.sender_phone = data['phone']
             self.created_date = timezone.now()
+
+        elif 'subscribe_button' in data:
+            self.title = data['email']
+            self.typeof = 'Подписка'
+            self.params = 'нет параметров'
+            self.sender_email = data['email']
+            self.sender_phone = 'не известен'
+            self.created_date = timezone.now()
+
+        elif 'ask_question' in data:
+            self.title = data['name']
+            self.typeof = 'Вопрос'
+            self.params = 'без параметров, просто вопрос'
+            self.sender_email = data['email']
+            self.sender_phone = data['phone']
+            self.created_date = timezone.now()
+        else:
+            raise AttributeError(f'{self.__class__.__name__} is invalid')
 
     def __str__(self):
         return f'{self.title} - {self.typeof}'
@@ -27,46 +51,28 @@ class MessageModelAdapter:
 
 def main(request):
     title = "Главная - НАКС Смоленск"
+    
     if request.method == 'POST':
-        for key in request.POST:
-            print("in post: ", key, ":", request.POST[key])
-        if 'send_message_button' in request.POST:
-            data = {
-                'name' : request.POST['name'],
-                'phone': request.POST['phone'],
-                'email': request.POST['email'],
-                'params': {
-                    'attsv' : 'attsv' in request.POST,
-                    'attsp': 'attsv' in request.POST,
-                    'attso': 'attso' in request.POST,
-                    'attst': 'attst' in request.POST,
-                    'nok': 'nok' in request.POST
-                },
-                'pdata': request.POST['pdata']
-            }
-            print(data)
-            form = SendMessageForm(data)
-
-            if form.is_valid():
-                print('ok')
-                form_data = form.save(commit=False)
-                form_data.save()
-            else:
-                # messages.error(request, "Error")
-                context = {
-                'title': 'Исправьте ошибки формы',
-                'send_message_form': form
-                }
-                return render(request, 'mainapp/index.html', context)
-
+        request_to_dict = dict(zip(request.POST.keys(), request.POST.values()))
+        # for key in request.POST:
+            # print(request.POST.items())
+            # print("in post: ", key, ":", request.POST[key])
+        print('POST:', request_to_dict)
+        adapted_data = MessageModelAdapter(request_to_dict)
+        print(adapted_data)
+        print(adapted_data.created_date)
+        print(adapted_data.params)
 
     docs = Document.objects.filter(
         publish_on_main_page=True).order_by('-created_date')[:3]
+
     main_page_news = Post.objects.filter(
         publish_on_main_page=True).order_by('-published_date')[:3]
+
     posts = {}
     for post in main_page_news:
         posts[post] = PostPhoto.objects.filter(post__pk=post.pk).first()
+
 
     main_page_articles = Article.objects.filter(publish_on_main_page=True).order_by('-published_date')[:3]
 
@@ -76,7 +82,9 @@ def main(request):
         'posts': posts,
         'docs': docs,
         'articles': main_page_articles,
-        'send_message_form': SendMessageForm()
+        'send_message_form': SendMessageForm(),
+        'subscribe_form': SubscribeForm(),
+        'ask_question_form': AskQuestionForm()
     }
 
     return render(request, 'mainapp/index.html', content)
