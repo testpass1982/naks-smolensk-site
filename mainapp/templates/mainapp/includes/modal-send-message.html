@@ -6,41 +6,45 @@
             <div class="modal__header_text">Выберите вид аттестации, введите свои контактные данные, и наш специалист
                 свяжется с вами в ближайшее время</div>
         </div>
-        <form action='/contact/' method='post'>
+        <form method='post'>
+        
             <!-- {% csrf_token %} -->
-            <div class="modal__form_container">
+            <div class="modal__form_container" enctype="multipart/form-data">
                 <div class="modal__form_input_container">
+                    {{send_message_form.errors}}
                     <div class="modal__form_input_label">Имя</div>
-                    <input type="text" name="name" class="modal__form_input">
+                    {{send_message_form.name}}
                     <div class="modal__form_input_label">Телефон</div>
-                    <input type="text" name="phone" class="modal__form_input">
+                    {{send_message_form.phone}}
+                    <div class="modal__form_input_label">Адрес электронной почты</div>
+                    {{send_message_form.email}}
                     <label class="checkbox-container theme-gray">Аттестация сварщиков
-                            <input name="attsv" value="att-welders" type="checkbox">
+                            <input name="attsv" type="checkbox">
                             <span class="checkmark"></span>
                         </label>
                     <label class="checkbox-container theme-gray">Аттестация специалистов сварочного производства
-                            <input type="checkbox" name="attsp">
+                            <input name="attsp" type="checkbox" >
                             <span class="checkmark"></span>
                         </label>
                     <label class="checkbox-container theme-gray">Аттестация сварочного оборудования
-                            <input type="checkbox" name="attso">
+                            <input name="attso" type="checkbox" >
                             <span class="checkmark"></span>
                         </label>
                     <label class="checkbox-container theme-gray">Аттестация сварочных технологий
-                            <input type="checkbox">
+                            <input name="attst" type="checkbox">
                             <span class="checkmark"></span>
                         </label>
                     <label class="checkbox-container theme-gray">Независимая оценка квалификации
-                            <input type="checkbox">
+                            <input name="nok" type="checkbox">
                             <span class="checkmark"></span>
                         </label>
                     <div class="modal__form_input_label">Комментарий к заявке</div>
-                    <textarea rows="5" cols="20" class="modal__form_textarea"></textarea>
+                    {{send_message_form.comment}}
                     <label class="checkbox-container theme-gray">Я даю согласие на обработку моих персональных данных
-                        <input type="checkbox">
+                        {{send_message_form.pdata}}
                         <span class="checkmark"></span>
                     </label>
-                    <input type="submit" class="form__button">Отправить</div>
+                    <input type="submit" name="send_message_button" class="form__button" value='Отправить'>
                 </div>
     
             </div>

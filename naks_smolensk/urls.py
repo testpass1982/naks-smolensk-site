@@ -28,6 +28,7 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
     path('messages/', mainapp.messages, name = 'messages'),
+    path('validate_form/', mainapp.validate_form, name = 'validate_form') #use for ajax form validation
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

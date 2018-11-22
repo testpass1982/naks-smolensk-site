@@ -1,5 +1,5 @@
 from django import forms
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, validate_email
 import os
 
 from .models import Post, Article, Document
@@ -36,6 +36,24 @@ class DocumentForm(ContentForm):
     class Meta(ContentForm.Meta):
         model = Document
         fields = ContentForm.Meta.fieldset['document_form_fields']
+
+class SendMessageForm(forms.Form):
+    name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
+    phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'modal__form_input'}))
+    params = forms.CharField(max_length=128)
+    comment = forms.CharField(required=False, max_length=256, widget=forms.Textarea(attrs={'class': 'modal__form_textarea'}))
+    pdata = forms.BooleanField(initial=True, required=True, widget=forms.CheckboxInput(attrs={'class': 'checkmark'}))
+
+class SubscribeForm(forms.Form):
+    email = forms.CharField()
+
+class AskQuestionForm(forms.Form):
+    name = forms.CharField(max_length=20)
+    phone = forms.CharField(max_length=20)
+    email = forms.EmailField()
+    comment = forms.CharField(max_length=256)
+    pdata = forms.BooleanField(required=True)
 
     # def clean(self):
     #     document = self.cleaned_data.get('document', None)

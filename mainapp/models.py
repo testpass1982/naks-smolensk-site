@@ -126,6 +126,7 @@ class Message(models.Model):
     params = models.CharField(u'Параметры сообщения', max_length=512, blank=True)
     sender_email = models.EmailField(u'Адрес электронной почты', max_length=64, blank=True)
     sender_phone = models.CharField(u'Телефон', max_length=64, blank=True)
+    created_date = models.DateTimeField(u'Дата получения', default=timezone.now)
 
     class Meta:
         verbose_name = 'Сообщение'

@@ -30,16 +30,18 @@
                 <div class="main-footer__subscribe-container">
                     <div class="main-footer__subscribe--heading">Подписка на новости и обновления</div>
                     <div class="disp-flex">
-                        <input type="text" class="main-footer__subscribe-email--input" placeholder="Введите e-mail">
-                        <div class="main-footer__subscribe--button">Отправить</div>
+                        <form class="main-footer__subscribe--form" method="post">
+                            <input type="text" class="main-footer__subscribe-email--input" name="email" placeholder="Введите e-mail">
+                            <input class="main-footer__subscribe--button" type="submit" name="subscribe_button" value="Отправить">
+                            <!--awesome-custom-checkbox-->
+                            <label class="checkbox-container">Я даю согласие на обработку моих персональных данных
+                                <input type="checkbox" name="pdata">
+                                <span class="checkmark"></span>
+                            </label>
+                            <!--checkbox-end-->
+                        </form>
                     </div>
 
-                    <!--awesome-custom-checkbox-->
-                    <label class="checkbox-container">Я даю согласие на обработку моих персональных данных
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <!--checkbox-end-->
                 </div>
             </div>
             <div class="col-xs-12 col-sm-6 col-lg-2 offset-xl-2 col-xl-2 no-gutters">
