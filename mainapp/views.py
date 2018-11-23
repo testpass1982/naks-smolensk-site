@@ -8,60 +8,33 @@ from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, PostPhoto, Tag, Category, Document, Article, Message
 from .forms import PostForm, ArticleForm, DocumentForm, SendMessageForm, SubscribeForm, AskQuestionForm
+from .adapters import MessageModelAdapter
 
 # Create your views here.
-class MessageModelAdapter:
-    def __init__(self, data):
-        if 'send_message_button' in data:
-            self.title = data['name']
-            self.typeof = 'Заявка'
-            self.params = {
-                    'attsv' : 'attsv' in data,
-                    'attsp': 'attsv' in data,
-                    'attso': 'attso' in data,
-                    'attst': 'attst' in data,
-                    'nok': 'nok' in data
-                    }
-            self.sender_email = data['email']
-            self.sender_phone = data['phone']
-            self.created_date = timezone.now()
-
-        elif 'subscribe_button' in data:
-            self.title = data['email']
-            self.typeof = 'Подписка'
-            self.params = 'нет параметров'
-            self.sender_email = data['email']
-            self.sender_phone = 'не известен'
-            self.created_date = timezone.now()
-
-        elif 'ask_question' in data:
-            self.title = data['name']
-            self.typeof = 'Вопрос'
-            self.params = 'без параметров, просто вопрос'
-            self.sender_email = data['email']
-            self.sender_phone = data['phone']
-            self.created_date = timezone.now()
-        else:
-            raise AttributeError(f'{self.__class__.__name__} is invalid')
-
-    def __str__(self):
-        return f'{self.title} - {self.typeof}'
-    # def adapted(self):
-    #     return self.data
-
 def main(request):
     title = "Главная - НАКС Смоленск"
     
     if request.method == 'POST':
         request_to_dict = dict(zip(request.POST.keys(), request.POST.values()))
-        # for key in request.POST:
-            # print(request.POST.items())
-            # print("in post: ", key, ":", request.POST[key])
-        print('POST:', request_to_dict)
-        adapted_data = MessageModelAdapter(request_to_dict)
-        print(adapted_data)
-        print(adapted_data.created_date)
-        print(adapted_data.params)
+        
+        form_select = {
+            'send_message_button': SendMessageForm,
+            'subscribe_button': SubscribeForm,
+            'ask_question': AskQuestionForm,
+        }
+
+        for key in form_select.keys():
+            if key in request_to_dict:
+                print('got you!', key)
+                form_class = form_select[key]
+
+        form = form_class(request_to_dict)
+        if form.is_valid():
+            adapted_data = MessageModelAdapter(request_to_dict)
+            adapted_data.save_to_message()
+            print('SAVED TO MODEL')
+        else:
+            raise ValidationError('form not valid')
 
     docs = Document.objects.filter(
         publish_on_main_page=True).order_by('-created_date')[:3]
@@ -73,9 +46,7 @@ def main(request):
     for post in main_page_news:
         posts[post] = PostPhoto.objects.filter(post__pk=post.pk).first()
 
-
     main_page_articles = Article.objects.filter(publish_on_main_page=True).order_by('-published_date')[:3]
-
 
     content = {
         'title': title,

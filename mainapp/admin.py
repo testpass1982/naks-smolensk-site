@@ -75,7 +75,9 @@ class PostPhotoAdmin(admin.ModelAdmin):
     readonly_fields = ['id', get_picture_preview]
     list_display = ['title', 'post', get_picture_preview]
 
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ['title', 'typeof', 'params', 'sender_email']
 
 admin.site.register(Tag)
 admin.site.register(Category)
-admin.site.register(Message)

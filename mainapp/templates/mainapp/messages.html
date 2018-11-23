@@ -3,7 +3,7 @@
 {% block content %}
         <div class="content-container">
             {% for message in messages %}
-            <div class="alert alert-primary">{{ message.title }} | {{ message.sender_phone }} | {{ message.sender_email }}</div>
+            <div class="alert alert-primary">{{ message.typeof }} {{ message.title }} | {{ message.sender_phone }} | {{ message.sender_email }} Комментарий: {{ message.comment }}</div>
             {% endfor %}
         </div>
 {% endblock %}
