@@ -15,7 +15,7 @@ class MessageModelAdapter:
                 'attst': 'attst' in data,
                 'nok': 'nok' in data,
                 'comment': data['comment']
-                }
+                    }
             self.test = {}
             self.sender_email = data['email']
             self.sender_phone = data['phone']
