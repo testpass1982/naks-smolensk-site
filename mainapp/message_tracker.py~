@@ -21,7 +21,7 @@ class MessageTracker:
                 self.messages.append(message)
                 print(message, ' added to notify-list')
             else:
-                print(message, ' has been already sent')
+                print(message, ' has been sent')
                 # time.sleep(1)
 
     def register_observer(self, observer):

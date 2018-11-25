@@ -84,7 +84,7 @@ DATABASES = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = 'email/messages' 
+EMAIL_FILE_PATH = '/email/app-messages' 
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

@@ -7,11 +7,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, PostPhoto, Tag, Category, Document, Article, Message
 from .forms import PostForm, ArticleForm, DocumentForm, SendMessageForm, SubscribeForm, AskQuestionForm
 from .adapters import MessageModelAdapter
-
+from .message_tracker import MessageTracker
 # Create your views here.
 def main(request):
     """this is main view"""
     title = "Главная - НАКС Смоленск"
+    tracker = MessageTracker()
     if request.method == 'POST':
         request_to_dict = dict(zip(request.POST.keys(), request.POST.values()))
         form_select = {
@@ -28,6 +29,8 @@ def main(request):
             adapted_data = MessageModelAdapter(request_to_dict)
             adapted_data.save_to_message()
             print('SAVED TO MODEL')
+            tracker.check_messages() 
+            tracker.notify_observers()
         else:
             raise ValidationError('form not valid')
 
