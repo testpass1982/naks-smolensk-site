@@ -10,7 +10,7 @@ from .adapters import MessageModelAdapter
 from .message_tracker import MessageTracker
 # Create your views here.
 def main(request):
-    """this is main view"""
+    """this is mainpage view with forms handler and adapter to messages"""
     title = "Главная - НАКС Смоленск"
     tracker = MessageTracker()
     if request.method == 'POST':
@@ -26,9 +26,10 @@ def main(request):
                 form_class = form_select[key]
         form = form_class(request_to_dict)
         if form.is_valid():
-            adapted_data = MessageModelAdapter(request_to_dict)
+            #saving form data to messages (need to be cleaned in future)
+            adapted_data = MessageModelAdapter(request_to_dict) 
             adapted_data.save_to_message()
-            print('SAVED TO MODEL')
+            print('adapted data saved to database')
             tracker.check_messages() 
             tracker.notify_observers()
         else:
@@ -163,7 +164,7 @@ def create_factory(request, content_type):
         return render(request, 'mainapp/content_edit_form.html', context)
 
 def validate_form(request):
-    '''docstring to function'''
+    '''view to expand in future with ajax'''
     email = request.GET.get('email', None)
     data = {
         'Email': 'Email success'
@@ -171,13 +172,11 @@ def validate_form(request):
     return JsonResponse(data)
 
 def contact(request):
-    '''view to contact page'''
+    '''view to contact page - forms will redirect here in future'''
     if request.method == 'POST':
         print(request.POST)
         name = request.POST.get('name')
         phone = request.POST.get('phone')
-        # request.POST.update({'name': 'Tolik'})
-        # print(request.META)
         context = {
             'name': name,
             'phone': phone
@@ -185,6 +184,7 @@ def contact(request):
     return render(request, 'mainapp/contact.html', context)
 
 def messages(request):
+    '''view to all messages in one page - will be @login_required'''
     # html = '<h1>I\'m working</h1>'
     # return HttpResponse(html)
     messages_list = Message.objects.all()

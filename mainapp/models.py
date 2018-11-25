@@ -153,3 +153,7 @@ class Message(models.Model):
 
     def __str__(self):
         return self.title
+
+    def set_status(self, status_code):
+        # if status_code in STATUS_LIST:
+        self.status = status_code
