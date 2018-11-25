@@ -77,7 +77,7 @@ class PostPhotoAdmin(admin.ModelAdmin):
 
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ['title', 'typeof', 'params', 'sender_email']
+    list_display = ['title', 'typeof', 'params', 'sender_email', 'status']
 
 admin.site.register(Tag)
 admin.site.register(Category)

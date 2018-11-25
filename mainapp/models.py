@@ -113,7 +113,7 @@ def upload_to(instance, filename):
 
 def get_image_filename():
     """unused function, left for future"""
-    return f'image_{slugify(timezone.now())}'
+    return 'image_{}'.format(slugify(timezone.now()))
 
 class PostPhoto(models.Model):
     """model to load photos to content page"""
@@ -133,12 +133,19 @@ class PostPhoto(models.Model):
 
 class Message(models.Model):
     """this is the class to use within adapter patter realization"""
+    STATUS_LIST = (
+        (0, 'new'),
+        (1, 'registered'),
+        (2, 'added_to_sending_queue'),
+        (3, 'notify_sent')
+    )
     title = models.CharField(u'Заголовок', max_length=64, blank=True)
     typeof = models.CharField(u'Тип сообщения', max_length=64, blank=True)
     params = models.CharField(u'Параметры сообщения', max_length=512, blank=True)
     sender_email = models.EmailField(u'Адрес электронной почты', max_length=64, blank=True)
     sender_phone = models.CharField(u'Телефон', max_length=64, blank=True)
     created_date = models.DateTimeField(u'Дата получения', default=timezone.now)
+    status = models.IntegerField(u'Статус', default=0, choices=STATUS_LIST)
 
     class Meta:
         verbose_name = 'Сообщение'
