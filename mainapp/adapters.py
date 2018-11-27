@@ -1,6 +1,7 @@
-#Адаптер для сообщений, отправленных с помощью форм сайта
+"""Адаптер для сообщений, отправленных с помощью форм сайта"""
 from django.utils import timezone
 from .models import Message
+
 
 class MessageModelAdapter:
     def __init__(self, data):
@@ -9,14 +10,13 @@ class MessageModelAdapter:
             self.title = data['name']
             self.typeof = 'Заявка'
             self.params = {
-                'attsv' : 'attsv' in data,
+                'attsv': 'attsv' in data,
                 'attsp': 'attsv' in data,
                 'attso': 'attso' in data,
                 'attst': 'attst' in data,
                 'nok': 'nok' in data,
                 'comment': data['comment']
                 }
-            self.test = {}
             self.sender_email = data['email']
             self.sender_phone = data['phone']
             self.created_date = timezone.now()
@@ -37,12 +37,11 @@ class MessageModelAdapter:
             self.sender_phone = data['phone']
             self.created_date = timezone.now()
         else:
-            raise AttributeError(f'{self.__class__.__name__} is invalid')
+            raise AttributeError(
+                '{} is invalid'.format(self.__class__.__name__))
 
     def __str__(self):
-        return f'{self.title} - {self.typeof}'
-    # def adapted(self):
-    #     return self.data
+        return '{} - {}'.format(self.title, self.typeof)
 
     def save_to_message(self):
         self.message.title = self.title

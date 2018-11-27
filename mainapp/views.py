@@ -5,10 +5,13 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, PostPhoto, Tag, Category, Document, Article, Message
-from .forms import PostForm, ArticleForm, DocumentForm, SendMessageForm, SubscribeForm, AskQuestionForm
+from .forms import PostForm, ArticleForm, DocumentForm
+from .forms import SendMessageForm, SubscribeForm, AskQuestionForm
 from .adapters import MessageModelAdapter
 from .message_tracker import MessageTracker
 # Create your views here.
+
+
 def main(request):
     """this is mainpage view with forms handler and adapter to messages"""
     title = "Главная - НАКС Смоленск"
@@ -26,11 +29,12 @@ def main(request):
                 form_class = form_select[key]
         form = form_class(request_to_dict)
         if form.is_valid():
-            #saving form data to messages (need to be cleaned in future)
-            adapted_data = MessageModelAdapter(request_to_dict) 
+
+            # saving form data to messages (need to be cleaned in future)
+            adapted_data = MessageModelAdapter(request_to_dict)
             adapted_data.save_to_message()
             print('adapted data saved to database')
-            tracker.check_messages() 
+            tracker.check_messages()
             tracker.notify_observers()
         else:
             raise ValidationError('form not valid')
@@ -45,7 +49,8 @@ def main(request):
     for post in main_page_news:
         posts[post] = PostPhoto.objects.filter(post__pk=post.pk).first()
 
-    main_page_articles = Article.objects.filter(publish_on_main_page=True).order_by('-published_date')[:3]
+    main_page_articles = Article.objects.filter(
+        publish_on_main_page=True).order_by('-published_date')[:3]
 
     content = {
         'title': title,
@@ -58,6 +63,7 @@ def main(request):
     }
 
     return render(request, 'mainapp/index.html', content)
+
 
 def news(request):
     """this is the news view"""
@@ -82,6 +88,7 @@ def news(request):
 
     return render(request, 'mainapp/news.html', content)
 
+
 def details(request):
     content = request.GET.get('content_type')
     pk = request.GET.get('pk')
@@ -99,11 +106,13 @@ def details(request):
             'post': obj,
             'images': attached_images,
             'documents': attached_documents,
-            'bottom_related': Article.objects.all().order_by('-created_date')[:3]
+            'bottom_related': Article.objects.all().order_by(
+                '-created_date')[:3]
         }
     if content == 'article':
         tags_pk_list = [tag.pk for tag in obj.tags.all()]
-        related_articles = Article.objects.filter(tags__in=tags_pk_list).exclude(pk=pk).distinct()
+        related_articles = Article.objects.filter(
+            tags__in=tags_pk_list).exclude(pk=pk).distinct()
         post_content = {
             'post': obj,
             'related': related_articles,
@@ -123,7 +132,7 @@ def create_factory(request, content_type):
         'article': 'статью',
         'document': 'документ'
     }
-    title = f'Создать {form_name_select[content_type]}'
+    title = 'Создать {}'.format(form_name_select[content_type])
 
     forms = {
         'post': PostForm,
@@ -163,6 +172,7 @@ def create_factory(request, content_type):
 
         return render(request, 'mainapp/content_edit_form.html', context)
 
+
 def validate_form(request):
     '''view to expand in future with ajax'''
     email = request.GET.get('email', None)
@@ -170,6 +180,7 @@ def validate_form(request):
         'Email': 'Email success'
     }
     return JsonResponse(data)
+
 
 def contact(request):
     '''view to contact page - forms will redirect here in future'''
@@ -180,15 +191,16 @@ def contact(request):
         context = {
             'name': name,
             'phone': phone
-            }
+        }
     return render(request, 'mainapp/contact.html', context)
+
 
 def messages(request):
     '''view to all messages in one page - will be @login_required'''
     # html = '<h1>I\'m working</h1>'
     # return HttpResponse(html)
     messages_list = Message.objects.all()
-    
+
     context = {
         'messages': messages_list
     }

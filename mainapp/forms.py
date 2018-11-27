@@ -4,18 +4,25 @@ import os
 
 from .models import Post, Article, Document
 
+
 class ContentForm(forms.ModelForm):
+    """form to use with fabric in news-view"""
+
     def __init__(self, *args, **kwargs):
         super(forms.ModelForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        fieldset  = {
-            'post_form_fields' : ('title', 'tags', 'category', 'author', 'text', 'created_date', 'published_date'),
-            'article_form_fields' : ('title', 'tags', 'author', 'text', 'created_date', 'published_date'),
-            'document_form_fields' : ('title', 'document', 'tags', 'created_date', 'uploaded_at')
+        fieldset = {
+            'post_form_fields': ('title', 'tags', 'category', 'author', 'text',
+                                 'created_date', 'published_date'),
+            'article_form_fields': ('title', 'tags', 'author', 'text',
+                                    'created_date', 'published_date'),
+            'document_form_fields': ('title', 'document', 'tags',
+                                     'created_date', 'uploaded_at')
         }
+
 
 class PostForm(ContentForm):
 
@@ -23,11 +30,13 @@ class PostForm(ContentForm):
         model = Post
         fields = ContentForm.Meta.fieldset['post_form_fields']
 
+
 class ArticleForm(ContentForm):
 
     class Meta(ContentForm.Meta):
         model = Article
         fields = ContentForm.Meta.fieldset['article_form_fields']
+
 
 class DocumentForm(ContentForm):
     ALOWED_TYPES = ['jpg', 'jpeg', 'doc', 'docx', 'pdf', 'xls', 'xlsx']
@@ -36,26 +45,46 @@ class DocumentForm(ContentForm):
         model = Document
         fields = ContentForm.Meta.fieldset['document_form_fields']
 
+
 class SendMessageForm(forms.Form):
-    name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
-    phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'modal__form_input'}))
+    name = forms.CharField(max_length=50, widget=forms.TextInput(
+        attrs={'class': 'modal__form_input'}))
+    phone = forms.CharField(max_length=20, widget=forms.TextInput(
+        attrs={'class': 'modal__form_input'}))
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'class': 'modal__form_input'}))
     params = forms.CharField(required=False, max_length=128)
-    comment = forms.CharField(required=False, max_length=256, widget=forms.Textarea(attrs={'class': 'modal__form_textarea'}))
-    pdata = forms.BooleanField(initial=True, required=True, widget=forms.CheckboxInput(attrs={'class': 'checkmark'}))
+    comment = forms.CharField(
+        required=False, max_length=256, widget=forms.Textarea(
+            attrs={'class': 'modal__form_textarea'}))
+    pdata = forms.BooleanField(
+        initial=True, required=True, widget=forms.CheckboxInput(
+            attrs={'class': 'checkmark'}))
+
 
 class SubscribeForm(forms.Form):
-    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={'class': 'main-footer__subscribe-email--input', 'placeholder': 'Введите e-mail'}))
+    email = forms.EmailField(
+        required=True, widget=forms.EmailInput(
+            attrs={'class': 'main-footer__subscribe-email--input',
+                   'placeholder': 'Введите e-mail'}))
 
 
 class AskQuestionForm(forms.Form):
-    name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
-    phone = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'modal__form_input'}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'modal__form_input'}))
-    comment = forms.CharField(required=False, max_length=256, widget=forms.Textarea(attrs={'class': 'modal__form_textarea'}))
+    name = forms.CharField(max_length=50, widget=forms.TextInput(
+        attrs={'class': 'modal__form_input'}))
+    phone = forms.CharField(max_length=20, widget=forms.TextInput(
+        attrs={'class': 'modal__form_input'}))
+    email = forms.EmailField(widget=forms.EmailInput(
+        attrs={'class': 'modal__form_input'}))
+    comment = forms.CharField(
+        required=False, max_length=256, widget=forms.Textarea(
+            attrs={'class': 'modal__form_textarea'}))
     pdata = forms.BooleanField(
-        error_messages={'required': 'Вы должны принять условия обработки персональных данных в соответствии с 152-ФЗ'},
-        initial=True, required=True, widget=forms.CheckboxInput(attrs={'class': 'checkmark'}))
+        error_messages={
+            'required': 'Вы должны принять условия обработки \
+            персональных данных в соответствии с 152-ФЗ'},
+        initial=True, required=True, widget=forms.CheckboxInput(
+            attrs={'class': 'checkmark'}))
 
     # def clean(self):
     #     document = self.cleaned_data.get('document', None)

@@ -15,7 +15,8 @@ from django.utils.text import slugify
 
 # Create your models here.
 class Tag(models.Model):
-    """tag model to use on main page content"""
+
+    
     name = models.CharField(max_length=64)
     class Meta:
         verbose_name = "Тэг"
@@ -129,7 +130,7 @@ class PostPhoto(models.Model):
         ordering = ['position']
 
     def __str__(self):
-        return f'{self.post} - {self.image}'
+        return '{} - {}'.format(self.post, self.image)
 
 class Message(models.Model):
     """this is the class to use within adapter patter realization"""
