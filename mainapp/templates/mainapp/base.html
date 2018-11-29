@@ -17,14 +17,26 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/checkbox-style.css' %}">
     {% endblock %}
-    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <!-- <script src="/js/w3.js"></script> -->
+
     <title>
         {% block title %}
             {{ title|title }}
         {% endblock%}
     </title>
+
+
+    <meta property="og:url"           content="{{ request.build_absolute_uri|urlencode }}" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="{{ title|title }}" />
+    <meta property="og:description"   content="NAKS SMOLENSK" />
+    <meta property="og:image"         content="{%if images %}{{ images.0.url }}{%endif%}" />
+
+
+
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <!-- <script src="/js/w3.js"></script> -->
     <script>
         {% if messages %}
             {% for message in messages %}
@@ -35,6 +47,15 @@
 </head>
 
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v3.2';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
     <main>
         <!--import-header.html-->
         <div class="fixed-fix">Fix</div>
@@ -62,14 +83,14 @@
                         <div class="footer__ask-question--area--container container disp-flex align-items-start">
                             <div class="footer__do-you-have-a-question--heading">Возникли вопросы?</div>
                             <div class="footer__ask-question--button" id="button_ask_question">Задать вопрос</div>
-                            <div class="footer__use-a-question-form--text">Воспользуйтесь формой <b>"Задать вопрос"</b>
+                            <div class="footer__use-amo-question-form--text">Воспользуйтесь формой <b>"Задать вопрос"</b>
                                 и наш специалист ответит Вам в течение 5 минут</div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-lg-4 no-gutters">
                         <div class="footer__bewelder--area--container container disp-flex align-items-start">
                             <div class="footer__bewelder-area--heading">Работа в области сварки</div>
-                            <div class="footer__bewelder-area-find-job--button">Найти работу</div>
+                            <a class="footer__bewelder-area-find-job--button" href="http://bewelder.ru" target="_blank">Найти работу</a>
                             <div class="footer__bewelder-area-bewelder-ru--url">Bewelder.ru</div>
                             <div class="footer__bewelder-area-post-vacancy--url">или разместить вакансию <i class="fas fa-arrow-right"></i></div>
                         </div>

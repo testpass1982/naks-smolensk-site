@@ -24,11 +24,15 @@ urlpatterns = [
     path('news/', mainapp.news, name='news'),
     path('contact/', mainapp.contact, name='contact'),
     re_path(r'details/$', mainapp.details, name='post_details'),
+    path('detailview/<slug:content>/<slug:pk>',
+         mainapp.details, name='detailview'),
     path('create/<slug:content_type>', mainapp.create_factory, name='create'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
-    path('messages/', mainapp.messages, name = 'messages'),
-    path('validate_form/', mainapp.validate_form, name = 'validate_form') #use for ajax form validation
+    path('messages/', mainapp.messages, name='messages'),
+    path('validate_form/', mainapp.validate_form,
+         name='validate_form')  # use for ajax form validation
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

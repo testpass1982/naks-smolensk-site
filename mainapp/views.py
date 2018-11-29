@@ -68,7 +68,8 @@ def main(request):
 def news(request):
     """this is the news view"""
     title = "Новости АЦ"
-    all_news = Post.objects.all().order_by('-created_date')
+    all_news = Post.objects.all().filter(
+        publish_on_news_page=True).order_by('-created_date')
     all_documents = Document.objects.all().order_by('-created_date')[:5]
     post_list = [dict({'post': post, 'picture': PostPhoto.objects.filter(
         post__pk=post.pk).first()}) for post in all_news]
@@ -89,15 +90,18 @@ def news(request):
     return render(request, 'mainapp/news.html', content)
 
 
-def details(request):
-    content = request.GET.get('content_type')
-    pk = request.GET.get('pk')
+def details(request, pk=None, content=None):
+
+    if request.GET:
+        content = request.GET.get('content_type')
+        pk = request.GET.get('pk')
+
     content_select = {
         'post': Post,
         'article': Article
     }
     obj = get_object_or_404(content_select[content], pk=pk)
-
+    print(obj)
     common_content = {'title': obj.title}
     if content == 'post':
         attached_images = PostPhoto.objects.filter(post__pk=pk)

@@ -887,6 +887,7 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .footer__ask-question--button:hover {
+  cursor: pointer;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
@@ -935,6 +936,8 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 .footer__bewelder-area-find-job--button:hover {
+  text-decoration: none;
+  color: black;
   box-shadow: 0 0 30px yellow;
 }
 
@@ -1066,7 +1069,7 @@ body {
   border-color: transparent;
 }
 
-.main-footer__subscribe--form input[type=submit] {
+.main-footer__subscribe--form input[type="submit"] {
   padding: 12px 19px;
   background-color: #888888;
   border-radius: 3px;
@@ -1223,7 +1226,7 @@ body {
 }
 
 /* The Modal (background) */
-.modal {
+.modal-bg {
   display: none;
   /* Hidden by default */
   position: fixed;
@@ -1383,7 +1386,6 @@ body {
   /* Black w/ opacity */
 }
 
-
 /**************************************************
 ****************page details.html styles****************
 ***************************************************/
@@ -1438,7 +1440,11 @@ body {
 }
 
 .news-details--buttons--container {
+  display: flex;
+  flex-flow: row nowrap;
   flex-grow: 1;
+  flex-basis: 100%;
+  justify-content: space-between;
   padding: 13px;
   background-color: white;
 }
@@ -1461,18 +1467,20 @@ body {
   letter-spacing: 0.28px;
   padding-bottom: 10px;
 }
+.news-details--social--buttons--container {
+  display: flex;
+  flex-flow: row;
+  flex-grow: 0;
+  align-content: center;
+  /* text-align: center; */
+}
 
 .news-details-social-button {
+  flex-grow: 0;
   padding: 5px;
 }
 
-.news-details--social--buttons--container {
-  flex: 0 0 60%;
-  text-align: center;
-}
-
 .news-details--send-buttons-container {
-  flex: 0 0 40%;
   text-align: center;
 }
 
