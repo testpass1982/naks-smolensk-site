@@ -52,6 +52,9 @@ def main(request):
     main_page_articles = Article.objects.filter(
         publish_on_main_page=True).order_by('-published_date')[:3]
 
+    print(request.resolver_match)
+    print(request.resolver_match.url_name)
+
     content = {
         'title': title,
         'posts': posts,
@@ -80,6 +83,9 @@ def news(request):
 
     articles = Article.objects.all().order_by('-created_date')[:3]
 
+    print(request.resolver_match)
+    print(request.resolver_match.url_name)
+
     content = {
         'title': title,
         'news': posts,
@@ -91,6 +97,9 @@ def news(request):
 
 
 def details(request, pk=None, content=None):
+
+    print(request.resolver_match)
+    print(request.resolver_match.url_name)
 
     if request.GET:
         content = request.GET.get('content_type')
@@ -125,6 +134,9 @@ def details(request, pk=None, content=None):
 
     context = common_content.copy()
     context.update(post_content)
+
+    print(request.resolver_match)
+    print(request.resolver_match.url_name)
 
     return render(request, 'mainapp/page_details.html', context)
 
@@ -195,6 +207,10 @@ def contact(request):
         context = {
             'name': name,
             'phone': phone
+        }
+    else:
+        context = {
+            'title': 'Контакты'
         }
     return render(request, 'mainapp/contact.html', context)
 

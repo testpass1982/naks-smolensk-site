@@ -1,16 +1,18 @@
-<div class="main-content__nav-menu">
+<div class="main-content__nav-menu d-print-none">
     <div class="row align-items-center no-margins">
         <!--nav menu-start-->
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10">
             <div id="wrap" class="fixed-container">
                 <div class="main-content__nav-menu--container">
-                    <div class="main-content__nav-menu--menu-item"><a href="{% url "main" %}">Главная</a></div>
-                    <div class="main-content__nav-menu--menu-item"><a href="{% url 'news' %}">Новости</a></div>
-                    <div class="main-content__nav-menu--menu-item">О центре</div>
-                    <div class="main-content__nav-menu--menu-item">Услуги</div>
-                    <div class="main-content__nav-menu--menu-item">Руководящий состав</div>
-                    <div class="main-content__nav-menu--menu-item">Документы</div>
-                    <div class="main-content__nav-menu--menu-item"><a href="{% url "contact" %}">Контакты</a></div>
+                    <a class="main-content__nav-menu--menu-item{% if request.resolver_match.url_name == 'main' %}--selected{% endif %}" 
+                    href="{% url "main" %}">Главная</a>
+                    <a class="main-content__nav-menu--menu-item{% if request.resolver_match.url_name == 'news' %}--selected{% endif %}" 
+                    href="{% url 'news' %}">Новости</a>
+                    <a class="main-content__nav-menu--menu-item">О центре</a>
+                    <a class="main-content__nav-menu--menu-item">Услуги</a>
+                    <a class="main-content__nav-menu--menu-item">Руководящий состав</a>
+                    <a class="main-content__nav-menu--menu-item">Документы</a>
+                    <a class="main-content__nav-menu--menu-item" href="{% url "contact" %}">Контакты</a>
                     <a class="burger-icon" id="burger">
                             <i class="fa fa-bars"></i>
                           </a>

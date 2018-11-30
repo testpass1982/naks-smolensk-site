@@ -312,8 +312,30 @@ body {
 }
 .main-content__nav-menu--menu-item:hover {
   border-bottom: 3px solid #2d7de6;
+  text-decoration: none;
   cursor: pointer;
 }
+
+.main-content__nav-menu--menu-item:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.main-content__nav-menu--menu-item--selected {
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 16px;
+  border-bottom: 3px solid silver;
+  white-space: nowrap;
+  flex: 1 1;
+  border-bottom: 3px solid #2d7de6;
+}
+.main-content__nav-menu--menu-item--selected:hover {
+  color: white;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 900px) {
   .main-content__nav-menu--menu-item {
     padding: 20px;
@@ -1194,6 +1216,7 @@ body {
 }
 
 .main-footer__contacts-send-message--button {
+  cursor: pointer;
   border-radius: 3px;
   border: 1px solid #ffffff;
   color: white;

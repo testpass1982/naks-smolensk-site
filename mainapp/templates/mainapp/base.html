@@ -1,130 +1,176 @@
-{% load staticfiles %}
-<!DOCTYPE html>
+{% load staticfiles %} <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato|Playfair+Display"
+      rel="stylesheet"
+    />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Lato|Playfair+Display" rel="stylesheet">
-    
     {% block css %}
-    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-        crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/checkbox-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/bootstrap-grid.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/checkbox-style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/print-view.css' %}" type="text/css" media="print" />
     {% endblock %}
 
-    <title>
-        {% block title %}
-            {{ title|title }}
-        {% endblock%}
-    </title>
+    <title>{% block title %} {{ title | title }} {% endblock%}</title>
 
-
-    <meta property="og:url"           content="{{ request.build_absolute_uri|urlencode }}" />
-    <meta property="og:type"          content="website" />
-    <meta property="og:title"         content="{{ title|title }}" />
-    <meta property="og:description"   content="NAKS SMOLENSK" />
-    <meta property="og:image"         content="{%if images %}{{ images.0.url }}{%endif%}" />
-
-
+    <meta
+      property="og:url"
+      content="{{ request.build_absolute_uri|urlencode }}"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ title|title }}" />
+    <meta property="og:description" content="NAKS SMOLENSK" />
+    <meta
+      property="og:image"
+      content="{%if images %}{{ images.0.url }}{%endif%}"
+    />
 
     <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
-    <script type="text/javascript" src="https://vk.com/js/api/share.js?93" charset="windows-1251"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script
+      type="text/javascript"
+      src="https://vk.com/js/api/share.js?93"
+      charset="windows-1251"
+    ></script>
+    <!--
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    -->
     <!-- <script src="/js/w3.js"></script> -->
     <script>
-        {% if messages %}
-            {% for message in messages %}
-                alert(message)
-            {% endfor %}
-        {% endif %}
+      {% if messages %}
+          {% for message in messages %}
+              alert(message)
+          {% endfor %}
+      {% endif %}
     </script>
-</head>
+  </head>
 
-<body>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v3.2';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+  <body>
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src =
+          "https://connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v3.2";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+    </script>
 
     <main>
-        <!--import-header.html-->
-        <div class="fixed-fix">Fix</div>
-       {% include 'mainapp/includes/header.html' %}
-       <!--header-end-->
-       <div class="main-content">
-           
-           {% include 'mainapp/includes/navbar.html' %}
+      <!-- import-header.html -->
+      <div class="fixed-fix">Fix</div>
+      {% include 'mainapp/includes/header.html' %}
+      <!-- header-end -->
+      <div class="main-content">
+        {% include 'mainapp/includes/navbar.html' %}
 
-           <!--nav-menu-end-->
-           
-           {% include 'mainapp/includes/main-content.html' %}
-        </div>
-        <!--main-content-end-->
-        
-        {% block content%}
+        <!-- nav-menu-end -->
 
-        {% endblock %}
+        {% include 'mainapp/includes/main-content.html' %}
+      </div>
+      <!-- main-content-end -->
 
-        <!--bewelder-ad-footer-start-->
-        <div class="footer__bewelder-ad-footer">
-            <div class="content-container">
-                <div class="row no-margins">
-                    <div class="col-xs-12 col-lg-4 no-gutters">
-                        <div class="footer__ask-question--area--container container disp-flex align-items-start">
-                            <div class="footer__do-you-have-a-question--heading">Возникли вопросы?</div>
-                            <div class="footer__ask-question--button" id="button_ask_question">Задать вопрос</div>
-                            <div class="footer__use-amo-question-form--text">Воспользуйтесь формой <b>"Задать вопрос"</b>
-                                и наш специалист ответит Вам в течение 5 минут</div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-lg-4 no-gutters">
-                        <div class="footer__bewelder--area--container container disp-flex align-items-start">
-                            <div class="footer__bewelder-area--heading">Работа в области сварки</div>
-                            <a class="footer__bewelder-area-find-job--button" href="http://bewelder.ru" target="_blank">Найти работу</a>
-                            <div class="footer__bewelder-area-bewelder-ru--url">Bewelder.ru</div>
-                            <div class="footer__bewelder-area-post-vacancy--url">или разместить вакансию <i class="fas fa-arrow-right"></i></div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-lg-4 no-gutters">
-                        <div class="footer__welding-magazine--area--container container disp-flex align-items-start">
-                            <div class="footer__welding-magazine-area--logo"><img src="/static/img/welder-magazine-logo.png"
-                                    alt="Журнал Сварка и диагностика"></div>
-                            <div class="footer__welding-magazine-area--heading">svarka.naks.ru</div>
-                            <div class="footer__welding-magazine-area--sub-heading">Научно-технический и
-                                производственный журнал по сварке, контролю и диагностике</div>
-                        </div>
-                    </div>
+      {% block content%} {% endblock %}
+
+      <!-- bewelder-ad-footer-start -->
+      <div class="footer__bewelder-ad-footer d-print-none">
+        <div class="content-container">
+          <div class="row no-margins">
+            <div class="col-xs-12 col-lg-4 no-gutters">
+              <div
+                class="footer__ask-question--area--container container disp-flex align-items-start"
+              >
+                <div class="footer__do-you-have-a-question--heading">
+                  Возникли вопросы?
                 </div>
+                <div
+                  class="footer__ask-question--button"
+                  id="button_ask_question"
+                >
+                  Задать вопрос
+                </div>
+                <div class="footer__use-amo-question-form--text">
+                  Воспользуйтесь формой <b>"Задать вопрос"</b> и наш специалист
+                  ответит Вам в течение 5 минут
+                </div>
+              </div>
             </div>
+            <div class="col-xs-12 col-lg-4 no-gutters">
+              <div
+                class="footer__bewelder--area--container container disp-flex align-items-start"
+              >
+                <div class="footer__bewelder-area--heading">
+                  Работа в области сварки
+                </div>
+                <a
+                  class="footer__bewelder-area-find-job--button"
+                  href="http://bewelder.ru"
+                  target="_blank"
+                  >Найти работу</a
+                >
+                <div class="footer__bewelder-area-bewelder-ru--url">
+                  Bewelder.ru
+                </div>
+                <div class="footer__bewelder-area-post-vacancy--url">
+                  или разместить вакансию <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-lg-4 no-gutters">
+              <div
+                class="footer__welding-magazine--area--container container disp-flex align-items-start"
+              >
+                <div class="footer__welding-magazine-area--logo">
+                  <img
+                    src="/static/img/welder-magazine-logo.png"
+                    alt="Журнал Сварка и диагностика"
+                  />
+                </div>
+
+                <div class="footer__welding-magazine-area--heading">
+                  svarka.naks.ru
+                </div>
+                <div class="footer__welding-magazine-area--sub-heading">
+                  Научно-технический и производственный журнал по сварке,
+                  контролю и диагностике
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <!-- --bewelder-adfooter-end-- -->
-        <!--import-footer-html-->
-        {% include 'mainapp/includes/footer.html' %}
-        {% include 'mainapp/includes/modal-ask-question.html' %}
-        {% include 'mainapp/includes/modal-send-message.html' %}
-        <!-- <div w3-include-html="/includes/footer.html"></div>
-        <div w3-include-html="/includes/modal-ask-question.html"></div>
-        <div w3-include-html="/includes/modal-send-message.html"></div> -->
+      </div>
+      <!-- --bewelder-adfooter-end-- -->
+      <!-- import-footer-html -->
+      {% include 'mainapp/includes/footer.html' %} 
+      {% include 'mainapp/includes/modal-ask-question.html' %} 
+      {% include 'mainapp/includes/modal-send-message.html' %}
+      {% include 'mainapp/includes/modal-send-email.html' %}
 
-        <!-- The Modal -->
+      <!-- The Modal -->
 
-        <!--import-footer-html-end-->
+      <!-- import-footer-html-end -->
     </main>
 
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/modal.js' %}"></script>
     <script src="{% static 'js/w3.js' %}"></script>
     <script src="{% static 'js/w3include.js' %}"></script>
-</body>
-
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+  </body>
 </html>
