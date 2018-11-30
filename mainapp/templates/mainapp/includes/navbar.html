@@ -4,9 +4,9 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-10">
             <div id="wrap" class="fixed-container">
                 <div class="main-content__nav-menu--container">
-                    <a class="main-content__nav-menu--menu-item{% if request.resolver_match.url_name == 'main' %}--selected{% endif %}" 
+                    <a class="main-content__nav-menu--menu-item" 
                     href="{% url "main" %}">Главная</a>
-                    <a class="main-content__nav-menu--menu-item{% if request.resolver_match.url_name == 'news' %}--selected{% endif %}" 
+                    <a class="main-content__nav-menu--menu-item" 
                     href="{% url 'news' %}">Новости</a>
                     <a class="main-content__nav-menu--menu-item">О центре</a>
                     <a class="main-content__nav-menu--menu-item">Услуги</a>
