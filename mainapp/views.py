@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post, PostPhoto, Tag, Category, Document, Article, Message
+from .models import Post, PostPhoto, Tag, Category, Document, Article, Message, Contact
 from .forms import PostForm, ArticleForm, DocumentForm
 from .forms import SendMessageForm, SubscribeForm, AskQuestionForm
 from .adapters import MessageModelAdapter
@@ -212,6 +212,11 @@ def contact(request):
         context = {
             'title': 'Контакты'
         }
+
+    contacts = Contact.objects.all().order_by('number')
+
+    context['contacts'] = contacts
+
     return render(request, 'mainapp/contact.html', context)
 
 
@@ -225,3 +230,25 @@ def messages(request):
         'messages': messages_list
     }
     return render(request, 'mainapp/messages.html', context)
+
+def documents(request):
+    """view for documents page"""
+
+    doctypes = ['Аккредитация САСв', 'Допуск ЦОК', 'Оценочное средство']
+
+    tags = Tag.objects.all().filter(name__in=doctypes)
+
+    accreditation_list = Document.objects.filter(tags__in=Tag.objects.filter(name='Аккредитация САСв'))
+    cok_accreditation_list = Document.objects.filter(tags__in=Tag.objects.filter(name='Допуск ЦОК'))
+    os_doc_list = Document.objects.filter(tags__in=Tag.objects.filter(name='Оценочное средство'))
+    print(accreditation_list)
+    print(cok_accreditation_list)
+    print(os_doc_list)
+
+    content = {
+        'title': 'Документы',
+        'accreditation_list': accreditation_list,
+        'cok_accreditation_list': cok_accreditation_list,
+        'os_doc_list': os_doc_list
+    }
+    return render(request, 'mainapp/documents.html', content)

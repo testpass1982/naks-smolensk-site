@@ -52,6 +52,22 @@ body {
   margin: 0px 10px;
 }
 
+.plr10 {
+  padding: 0px 10px;
+}
+
+.plr20 {
+  padding: 0px 20px;
+}
+
+.plr30 {
+  padding: 0px 30px;
+}
+
+.w100 {
+  width: 100%;
+}
+
 @media screen and (max-width: 540px) {
   .sm-mb15 {
     margin-bottom: 15px;
@@ -302,7 +318,9 @@ body {
   }
 }
 
-.main-content__nav-menu--menu-item {
+.main-content__nav-menu--menu-item,
+.main-content__nav-menu--menu-item:visited {
+  color: white;
   text-align: center;
   padding: 30px 20px;
   font-size: 16px;
@@ -316,25 +334,6 @@ body {
   cursor: pointer;
 }
 
-.main-content__nav-menu--menu-item:visited {
-  color: white;
-  text-decoration: none;
-}
-
-.main-content__nav-menu--menu-item--selected {
-  color: white;
-  text-align: center;
-  padding: 30px 20px;
-  font-size: 16px;
-  border-bottom: 3px solid silver;
-  white-space: nowrap;
-  flex: 1 1;
-  border-bottom: 3px solid #2d7de6;
-}
-.main-content__nav-menu--menu-item--selected:hover {
-  color: white;
-  text-decoration: none;
-}
 
 @media screen and (max-width: 900px) {
   .main-content__nav-menu--menu-item {
@@ -496,6 +495,7 @@ body {
   padding-top: 35px;
   padding-left: 5px;
   padding-right: 5px;
+  padding-bottom: 20px;
 }
 
 .main_content__org_info--naks-logo-image {
@@ -592,8 +592,9 @@ body {
 .main-content__org_info--button,
 .main-content__org_info--button:visited {
   text-decoration: none;
+  white-space: nowrap;
   width: 100%;
-  max-width: 280px;
+  /* max-width: 280px; */
   padding: 14px 18px 14px 18px;
   margin-bottom: 30px;
   margin-left: 10px;
@@ -1477,11 +1478,12 @@ body {
   background-color: white;
 }
 
-@media screen and (max-width: 600) {
+@media screen and (max-width: 600px) {
   .news-details--buttons--container {
     flex-wrap: wrap;
   }
 }
+
 
 .news-details-post-header {
   padding-top: 43px;
@@ -1510,6 +1512,8 @@ body {
 }
 
 .news-details--send-buttons-container {
+  display: flex;  
+  flex-flow: row nowrap;
   text-align: center;
   flex: 1 1 100%;
 }
@@ -1575,3 +1579,7 @@ body {
   display: -ms-flexbox;
   display: flex;
 }
+
+/* ***************************************
+contact page styles 
+*************************************** */

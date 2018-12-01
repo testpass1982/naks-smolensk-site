@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.encoding import force_text
 from django.utils.html import format_html
 
-from .models import Post, Category, Tag, Document, PostPhoto, Article, Message
+from .models import Post, Category, Tag, Document, PostPhoto, Article, Message, Contact
 # Register your models here.
 
 
@@ -112,3 +112,4 @@ class MessageAdmin(admin.ModelAdmin):
 
 admin.site.register(Tag)
 admin.site.register(Category)
+admin.site.register(Contact)

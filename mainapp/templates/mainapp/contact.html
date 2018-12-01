@@ -2,10 +2,49 @@
 
 
 {% block content %}
+
 <div class="content-container">
-        <!-- {% csrf_token %} -->
-        <div class="alert alert-info">{{ name }}</div>
-        <div class="alert alert-info">{{ phone }}</div>
+	<div class="contact__container plr20">
+		<div class="row">
+			<div class="col-xs-12 col-md-5">
+				<div class="map">
+					<iframe src="https://yandex.ru/map-widget/v1/-/CBF7JGQRgC" width="100%" height="400" frameborder="0"
+					 allowfullscreen="true"></iframe>
+				</div>
+			</div>
+			<div class="col-xs-12 col-md-4">
+				{% for contact in contacts %}
+				<div class="card mb5">
+					<h5 class="card-header">{{ contact.title }}</h5>
+					<div class="card-body">
+						<h5 class="card-title">{{ contact.description }}</h5>
+						<p class="card-text">Телефон: {{ contact.phone }}</p>
+						<p class="card-text">E-mail: {{ contact.email }}</p>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			<div class="col-xs-12 col-md-3">
+				<div class="input-group mb-3">
+					<h2 class="contact__title">Свяжитесь с нами</h1>
+					<h4 class="contact__subtitle">Мы поможем решить Ваши задачи</h2>
+					<form class="w100" action="">
+						<div class="form-group">
+							<label for="contact__name">Имя</label>
+							<input type="text" class="form-control mb-3" name="contact__name" placeholder="Ваше имя" />
+							<label for="e-mail">E-mail</label>
+							<input type="email" class="form-control mb-3" name="e-mail" placeholder="Адрес электронной почты" />
+							<label for="phone">Телефон</label>
+							<input type="tel" class="form-control mb-3" name="phone" placeholder="Ваш телефон" />
+							<label for="text">Сообщение</label>
+							<textarea class="form-control mb-3" name="text" id="" rows="8" placeholder="Текст сообщения"></textarea>
+							<button class="btn btn-primary">Отправить</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 {% endblock %}

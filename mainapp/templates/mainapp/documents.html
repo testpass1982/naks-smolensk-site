@@ -1,0 +1,28 @@
+{% extends 'mainapp/base.html' %}
+
+{% block content %}
+    <div class="content-container">
+       
+            <div class="plr20">
+                <h2>Аккредитация в качества аттестационного центра НАКС</h2>
+                <ul class="list-group">
+                    {% for document in accreditation_list %}
+                    <li class="list-group-item">{{document.title}} : <a href="{{document.document.url}}">Скачать</a> </li>
+                    {% endfor %}
+                </ul>
+                <h2>Допуск к деятельности по оценке квалификации в качестве центра оценки квалификации (ЦОК)</h2>
+                <ul class="list-group">
+                    {% for document in cok_accreditation_list %}
+                    <li class="list-group-item">{{document.title}} : <a href="{{document.document.url}}">Скачать</a> </li>
+                    {% endfor %}
+                </ul>
+                <h2>Примеры оценочных средств, используемых для проведения оценки квалификации</h2>
+                <ul class="list-group mb-2">
+                    {% for document in os_doc_list %}
+                    <li class="list-group-item">{{document.title}} : <a href="{{document.document.url}}">Скачать</a> </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+
+{% endblock %}

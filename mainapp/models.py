@@ -202,3 +202,19 @@ class Message(models.Model):
     def set_status(self, status_code):
         # if status_code in STATUS_LIST:
         self.status = status_code
+
+class Contact(models.Model):
+    title = models.CharField(u'Название контакта', max_length=64, blank=False)
+    description = models.CharField(u'Описание', max_length=200, blank=False)
+    email = models.EmailField(
+        u'Адрес электронной почты', max_length=64, blank=False)
+    phone = models.CharField(u'Телефон', max_length=64, blank=False)
+    number = models.SmallIntegerField(u'Порядок вывода на сайт', default=0)
+
+    class Meta:
+        verbose_name = "Контакт"
+        verbose_name_plural = "Контакты"
+    
+    def __str__(self):
+        return self.title
+    
