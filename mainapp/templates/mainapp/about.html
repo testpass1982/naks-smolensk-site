@@ -1,0 +1,17 @@
+{% extends 'mainapp/base.html' %}
+
+
+{% block content %}
+<div class="content-container">
+    
+    <div class="plr20">
+        {% for post in pages %}
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.short_description }}</p>
+            <a class="btn btn-primary" href="{% url 'detailview' 'post' post.pk %}">Подробнее</a>
+            <hr>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+

@@ -2,66 +2,69 @@
 
 
 {% block content %}
-  <div class="content-container">
-            <div class="d-flex align-items-center">
-                <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
-                <a href="{% url 'create' 'post' %}" class="btn btn-link">Создать новость</a>
-                <a href="{% url 'create' 'article' %}"" class="btn btn-link">Создать статью</a>
-                <a href="{% url 'create' 'document' %}" class="btn btn-link">Загрузить документ</a>
-            </div>
+<div class="content-container">
+    <div class="d-flex align-items-center">
+        <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
+        <a href="{% url 'create' 'post' %}" class="btn btn-link">Создать новость</a>
+        <a href="{% url 'create' 'article' %}" class=" btn btn-link">Создать статью</a>
+        <a href="{% url 'create' 'document' %}" class="btn btn-link">Загрузить документ</a>
+    </div>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-12 col-lg-8">
-                        <div class="heading">Новости</div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 col-lg-8">
+                <div class="heading">Новости</div>
 
-                    {% for element in news %}
-                        <div class="news__tags--container">
-                            <div class="news__date">{{ element.post.published_date|date:"d-m-Y" }}</div>
-                            <div class="news__tag">
-                            {% for tag in element.post.tags.all %}
-                            <i class="fas fa-hashtag"></i>
-                            {{ tag.name }} 
-                            {% endfor %}</div>
-                        </div>
-                        <div class="news__news-record-with-picture">
-                            <img src="
+                {% for element in news %}
+                <div class="news__tags--container">
+                    <div class="news__date">{{ element.post.published_date|date:"d-m-Y" }}</div>
+                    <div class="news__tag">
+                        {% for tag in element.post.tags.all %}
+                        <i class="fas fa-hashtag"></i>
+                        {{ tag.name }}
+                        {% endfor %}</div>
+                </div>
+                <div class="news__news-record-with-picture">
+                    <img src="
                             {% if element.picture != None %}
                             {{ element.picture.image.url }}
                             {% else %}
                             /static/img/news_pict1.png
                             {% endif %}
-                            " alt="bla" class="news__picture">
-                            <div class="news__news-record-with-picture--heading">{{ element.post.title }}</div>
-                            <a href="{% url 'post_details' %}?content_type=post&pk={{element.post.pk}}" class="news__news-record-with-picture--button">Подробнее <i class="fas fa-arrow-right"></i></a>
-                        </div>
+                            "
+                        alt="bla" class="news__picture">
+                    <div class="news__news-record-with-picture--heading">{{ element.post.title }}</div>
+                    <a href="{% url 'post_details' %}?content_type=post&pk={{element.post.pk}}" class="news__news-record-with-picture--button">Подробнее
+                        <i class="fas fa-arrow-right"></i></a>
+                </div>
 
-                    {% endfor %}
+                {% endfor %}
 
+            </div>
+            <div class="col-xs-12 col-lg-4">
+                <div class="heading">Документы</div>
+
+                {% for document in documents %}
+
+                <div class="news__tags--container">
+                    <div class="news__date">{{ document.created_date|date:"d-m-Y" }}</div>
+                    {% for tag in document.tags.all %}
+                    <div class="news__tag">
+                        <i class="fas fa-hashtag"></i> {{ tag.name }}
                     </div>
-                    <div class="col-xs-12 col-lg-4">
-                        <div class="heading">Документы</div>
-
-                        {% for document in documents %}
-
-                        <div class="news__tags--container">
-                            <div class="news__date">{{ document.created_date|date:"d-m-Y" }}</div>
-                            {% for tag in document.tags.all %} 
-                                <div class="news__tag">
-                                    <i class="fas fa-hashtag"></i> {{ tag.name }}
-                                    </div>
-                                {% endfor %}    
+                    {% endfor %}
+                </div>
+                <div class="news__news-heading">
+                    <div class="news__line-rect"></div>
+                    <div class>
+                        <div class="news__news-heading--text">{{document.title}}
                         </div>
-                        <div class="news__news-heading">
-                            <div class="news__line-rect"></div>
-                            <div class>
-                                <div class="news__news-heading--text">{{document.title}}
-                                </div>
-                                <a class="news__button--read-more" href="{{ document.document.url }}" target="blank">Открыть <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    
-                        {% endfor %}
+                        <a class="news__button--read-more" href="{{ document.document.url }}" target="blank">Открыть <i
+                                class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                {% endfor %}
                 <!--end-row-->
             </div>
 
@@ -71,20 +74,22 @@
                 <nav>
                     <ul class="pagination">
 
-                    {% if news.has_previous %}
-                      <li class="page-item"><a class="page-link" href="?page=1">&laquo; Первая</a></li>
-                      <li class="page-item"><a class="page-link" href="?page={{ news.previous_page_number }}">Предыдущая</a></li>
-                    {% endif %}
+                        {% if news.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">&laquo; Первая</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ news.previous_page_number }}">Предыдущая</a></li>
+                        {% endif %}
 
-                      <li class="page-item active"><a class="page-link" href="?page={{ news.number }}">Страница {{ news.number }} из {{ news.paginator.num_pages }}</a></li>
-                    
-                    {% if news.has_next %}
-                      <li class="page-item"><a class="page-link" href="?page={{ news.next_page_number }}">Следующая</a></li>
-                      <li class="page-item"><a class="page-link" href="?page={{ news.paginator.num_pages }}">Последняя &raquo;</a></li>
-                    {% endif %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ news.number }}">Страница {{
+                                news.number }} из {{ news.paginator.num_pages }}</a></li>
+
+                        {% if news.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ news.next_page_number }}">Следующая</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ news.paginator.num_pages }}">Последняя
+                                &raquo;</a></li>
+                        {% endif %}
 
                     </ul>
-                  </nav>
+                </nav>
             </div>
 
             <!-- pagination -->
@@ -92,33 +97,39 @@
 
             <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
 
-        <div class="container-fluid">
+            <div class="container-fluid">
                 <div class="row">
-                        {% for article in bottom_related %}
-                        <div class="col-xs12 col-lg-4 no-gutters">
-                            <div class="news__article-record-container">
-                                
-                                <div class="news__tags--container">
-                                    <div class="news__date">{{ article.published_date }}</div>
-                                    {% for tag in article.tags.all %}
-                                        <div class="news__tag">
-                                        <i class="fas fa-hashtag"></i> {{ tag.name }}</div>
-                                        {% endfor %}
-                                </div>
-                
-                
-                                <div class="news__article-record-heading">{{ article.title }}</div>
-                                <div class="news__article-record-sub-heading--container">
-                                    <div class="news__article-record-sub-heading">{{ article.short_description }}</div>
-                                    <a class="news__article-record__read-more-button" href="{% url 'post_details' %}?content_type=article&pk={{article.pk}}">Читать <i class="fas fa-arrow-right"></i></a>
-                                </div>
-                    
+                    {% for article in bottom_related %}
+                    <div class="col-xs12 col-lg-4 no-gutters">
+                        <div class="news__article-record-container">
+
+                            <div class="news__tags--container">
+                                <div class="news__date">{{ article.published_date }}</div>
+                                {% for tag in article.tags.all %}
+                                <div class="news__tag">
+                                    <i class="fas fa-hashtag"></i> {{ tag.name }}</div>
+                                {% endfor %}
                             </div>
+
+
+                            <div class="news__article-record-heading">{{ article.title }}</div>
+                            <div class="news__article-record-sub-heading--container">
+                                <div class="news__article-record-sub-heading">{{ article.short_description }}</div>
+                                <a class="news__article-record__read-more-button" href="{% url 'post_details' %}?content_type=article&pk={{article.pk}}">Читать
+                                    <i class="fas fa-arrow-right"></i></a>
+                            </div>
+
                         </div>
-                        {% endfor %} 
+                    </div>
+                    {% endfor %}
                 </div>
 
+            </div>
         </div>
-    </div>
 
-{% endblock %}
+    </div>
+    
+</div>
+    
+
+        {% endblock %}

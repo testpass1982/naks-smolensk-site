@@ -49,6 +49,8 @@ class Category(models.Model):
 class ContentMixin(models.Model):
     '''base class for Post, Article and Documents'''
     title = models.CharField(u'Название', max_length=200)
+    short_description = models.CharField(
+        u'Краткое описание', max_length=200, blank=True)
     tags = models.ManyToManyField(Tag, verbose_name='Тэги')
     published_date = models.DateTimeField(
         u'Дата публикации', blank=True, null=True)
@@ -91,9 +93,6 @@ class Post(ContentMixin):
 
 class Article(ContentMixin):
     '''child of ContentMixin'''
-
-    short_description = models.CharField(
-        u'Краткое описание', max_length=200, blank=True)
 
     class Meta:
         ordering = ['created_date']
@@ -218,3 +217,16 @@ class Contact(models.Model):
     def __str__(self):
         return self.title
     
+class Staff(models.Model):
+    photo = models.ImageField(u'Фотография', blank=True)
+    name = models.CharField(u'ФИО', max_length=120, blank=False)
+    job = models.CharField(u'Должность', max_length=120, blank=False)
+    experience = models.CharField(u'Опыт работы', max_length=500, blank=True)
+    priority = models.SmallIntegerField(u'Приоритет', default=0)
+
+    class Meta:
+        verbose_name = "Сотрудник"
+        verbose_name_plural = "Сотрудники"
+    
+    def __str__(self):
+        return '{} - {}'.format(self.name, self.job)

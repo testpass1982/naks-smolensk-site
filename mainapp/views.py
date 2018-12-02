@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import Http404, JsonResponse
+from django.http import Http404, JsonResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, PostPhoto, Tag, Category, Document, Article, Message, Contact
+from .models import Staff
 from .forms import PostForm, ArticleForm, DocumentForm
 from .forms import SendMessageForm, SubscribeForm, AskQuestionForm
 from .adapters import MessageModelAdapter
@@ -100,6 +101,7 @@ def details(request, pk=None, content=None):
 
     print(request.resolver_match)
     print(request.resolver_match.url_name)
+    return_link = HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     if request.GET:
         content = request.GET.get('content_type')
@@ -134,6 +136,7 @@ def details(request, pk=None, content=None):
 
     context = common_content.copy()
     context.update(post_content)
+    context['return_link'] = return_link
 
     print(request.resolver_match)
     print(request.resolver_match.url_name)
@@ -252,3 +255,25 @@ def documents(request):
         'os_doc_list': os_doc_list
     }
     return render(request, 'mainapp/documents.html', content)
+
+def services(request):
+    return render(request, 'mainapp/services.html')
+
+def about(request):
+    """this is docstring"""
+    pages = Post.objects.filter(category__name='О центре')
+    content = {
+        'pages': pages
+    }
+    return render(request, 'mainapp/about.html', content)
+
+def staff(request):
+    """this is docstring"""
+    staff = Staff.objects.all().order_by('-priority')
+    print(staff)
+
+    content = {
+        'staff': staff
+    }
+
+    return render(request, 'mainapp/staff.html', content)

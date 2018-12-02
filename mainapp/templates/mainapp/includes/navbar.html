@@ -8,9 +8,9 @@
                     href="{% url "main" %}">Главная</a>
                     <a class="main-content__nav-menu--menu-item" 
                     href="{% url 'news' %}">Новости</a>
-                    <a class="main-content__nav-menu--menu-item">О центре</a>
-                    <a class="main-content__nav-menu--menu-item">Услуги</a>
-                    <a class="main-content__nav-menu--menu-item">Руководящий состав</a>
+                    <a class="main-content__nav-menu--menu-item" href="{% url 'about' %}">О центре</a>
+                    <a class="main-content__nav-menu--menu-item" href="{% url 'services' %}">Услуги</a>
+                    <a class="main-content__nav-menu--menu-item" href="{% url 'staff' %}">Сотрудники</a>
                     <a class="main-content__nav-menu--menu-item" href="{% url 'documents' %}">Документы</a>
                     <a class="main-content__nav-menu--menu-item" href="{% url "contact" %}">Контакты</a>
                     <a class="burger-icon" id="burger">

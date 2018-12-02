@@ -4,7 +4,11 @@
 {% block content %}
 <!-- inner-page-here -->
 <div class="content-container">
+    {% if return_link %}
+    <a class="go-to-the-main-page--button d-print-none" href="{{ return_link.url }}"><i class="fas fa-arrow-left"></i> Назад</a>
+    {% else %}
     <a class="go-to-the-main-page--button d-print-none" href="/"><i class="fas fa-arrow-left"></i> На главную</a>
+    {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 col-xl-8">

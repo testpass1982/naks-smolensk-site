@@ -4,6 +4,7 @@ from django.utils.encoding import force_text
 from django.utils.html import format_html
 
 from .models import Post, Category, Tag, Document, PostPhoto, Article, Message, Contact
+from .models import Staff
 # Register your models here.
 
 
@@ -61,10 +62,15 @@ class DocumentInline(admin.StackedInline):
     fields = ['id', "title", 'document']
     list_display = ['title', 'publish_on_main_page']
 
+def get_tag_list(obj):
+    return [tag.name for tag in obj.tags.all()]
+get_tag_list.allowtags = True
+get_tag_list.short_description = 'Список тэгов'
+
 
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
-    list_display = ['title', 'publish_on_main_page']
+    list_display = ['title', get_tag_list, 'publish_on_main_page']
 
 
 @admin.register(Article)
@@ -84,7 +90,7 @@ class PostAdmin(admin.ModelAdmin):
     # save_on_top = True
     view_on_site = True
 
-    fields = ['id', 'title', 'tags', 'category', 'author', 'text', get_url,
+    fields = ['id', 'title', 'tags', 'category', 'author', 'short_description', 'text', get_url,
               'created_date', 'published_date', 'publish_on_main_page', 'publish_on_news_page']
     readonly_fields = ['id', get_url]
     list_display = ['title', 'category',
@@ -113,3 +119,4 @@ class MessageAdmin(admin.ModelAdmin):
 admin.site.register(Tag)
 admin.site.register(Category)
 admin.site.register(Contact)
+admin.site.register(Staff)
