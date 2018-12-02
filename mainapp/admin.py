@@ -4,7 +4,7 @@ from django.utils.encoding import force_text
 from django.utils.html import format_html
 
 from .models import Post, Category, Tag, Document, PostPhoto, Article, Message, Contact
-from .models import Staff
+from .models import Staff, Registry
 # Register your models here.
 
 
@@ -120,3 +120,4 @@ admin.site.register(Tag)
 admin.site.register(Category)
 admin.site.register(Contact)
 admin.site.register(Staff)
+admin.site.register(Registry)
