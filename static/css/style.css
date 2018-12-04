@@ -334,7 +334,6 @@ body {
   cursor: pointer;
 }
 
-
 @media screen and (max-width: 900px) {
   .main-content__nav-menu--menu-item {
     padding: 20px;
@@ -1484,7 +1483,6 @@ body {
   }
 }
 
-
 .news-details-post-header {
   padding-top: 43px;
   padding-bottom: 40px;
@@ -1512,7 +1510,7 @@ body {
 }
 
 .news-details--send-buttons-container {
-  display: flex;  
+  display: flex;
   flex-flow: row nowrap;
   text-align: center;
   flex: 1 1 100%;
@@ -1581,5 +1579,18 @@ body {
 }
 
 /* ***************************************
-contact page styles 
+contact page styles
 *************************************** */
+
+/****************************************
+reestr-sp styles
+****************************************/
+
+@media screen and (max-width: 600px) {
+  .registry-table {
+    width: auto;
+    max-width: 600px;
+    padding-left: 1%;
+    padding-right: 1%;
+  }
+}

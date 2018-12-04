@@ -5,11 +5,13 @@ from django.contrib import messages
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, PostPhoto, Tag, Category, Document, Article, Message, Contact
-from .models import Staff
+from .models import Staff, Registry
 from .forms import PostForm, ArticleForm, DocumentForm
 from .forms import SendMessageForm, SubscribeForm, AskQuestionForm
 from .adapters import MessageModelAdapter
 from .message_tracker import MessageTracker
+from .registry_import import Importer, data_url
+import json
 # Create your views here.
 
 
@@ -234,6 +236,7 @@ def messages(request):
     }
     return render(request, 'mainapp/messages.html', context)
 
+
 def documents(request):
     """view for documents page"""
 
@@ -241,9 +244,12 @@ def documents(request):
 
     tags = Tag.objects.all().filter(name__in=doctypes)
 
-    accreditation_list = Document.objects.filter(tags__in=Tag.objects.filter(name='Аккредитация САСв'))
-    cok_accreditation_list = Document.objects.filter(tags__in=Tag.objects.filter(name='Допуск ЦОК'))
-    os_doc_list = Document.objects.filter(tags__in=Tag.objects.filter(name='Оценочное средство'))
+    accreditation_list = Document.objects.filter(
+        tags__in=Tag.objects.filter(name='Аккредитация САСв'))
+    cok_accreditation_list = Document.objects.filter(
+        tags__in=Tag.objects.filter(name='Допуск ЦОК'))
+    os_doc_list = Document.objects.filter(
+        tags__in=Tag.objects.filter(name='Оценочное средство'))
     print(accreditation_list)
     print(cok_accreditation_list)
     print(os_doc_list)
@@ -256,8 +262,10 @@ def documents(request):
     }
     return render(request, 'mainapp/documents.html', content)
 
+
 def services(request):
     return render(request, 'mainapp/services.html')
+
 
 def about(request):
     """this is docstring"""
@@ -266,6 +274,7 @@ def about(request):
         'pages': pages
     }
     return render(request, 'mainapp/about.html', content)
+
 
 def staff(request):
     """this is docstring"""
@@ -277,3 +286,28 @@ def staff(request):
     }
 
     return render(request, 'mainapp/staff.html', content)
+
+
+def reestrsp(request, param=None):
+    """registry view for imported database entries"""
+    if request.method == 'GET':
+        accept = request.GET.get('import')
+        if accept == 'Y':
+            imported = Importer(data_url)
+            for i in range(10):
+                imported.save_data_to_db(imported.data[i])
+                print('DONE IMPORT')
+    records = Registry.objects.all().order_by('-created_date')
+    att_records = []
+    for record in records:
+        att_record = json.loads(record.params)
+        att_records.append(att_record)
+
+    if len(att_records) != 0:
+        content = {
+            'records': att_records
+        }
+    else:
+        print('empty')
+        content = None
+    return render(request, 'mainapp/reestr-sasv.html', content)

@@ -202,6 +202,7 @@ class Message(models.Model):
         # if status_code in STATUS_LIST:
         self.status = status_code
 
+
 class Contact(models.Model):
     title = models.CharField(u'Название контакта', max_length=64, blank=False)
     description = models.CharField(u'Описание', max_length=200, blank=False)
@@ -213,10 +214,11 @@ class Contact(models.Model):
     class Meta:
         verbose_name = "Контакт"
         verbose_name_plural = "Контакты"
-    
+
     def __str__(self):
         return self.title
-    
+
+
 class Staff(models.Model):
     photo = models.ImageField(u'Фотография', blank=True)
     name = models.CharField(u'ФИО', max_length=120, blank=False)
@@ -227,9 +229,10 @@ class Staff(models.Model):
     class Meta:
         verbose_name = "Сотрудник"
         verbose_name_plural = "Сотрудники"
-    
+
     def __str__(self):
         return '{} - {}'.format(self.name, self.job)
+
 
 class Registry(models.Model):
     """this is the class to load external registry records"""
@@ -238,8 +241,7 @@ class Registry(models.Model):
     typeof = models.CharField(u'Тип', max_length=64, blank=True)
     params = models.CharField(u'Параметры',
                               max_length=999, blank=True)
-    created_date = models.DateTimeField(
-        u'Дата получения', default=timezone.now)
+    created_date = models.DateField(u'Дата получения', blank=True)
     status = models.IntegerField(u'Статус', default=0, choices=STATUS_LIST)
 
     class Meta:
