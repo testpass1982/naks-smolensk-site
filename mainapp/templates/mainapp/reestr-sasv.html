@@ -1,75 +1,98 @@
 {% extends 'mainapp/base.html' %} {% block content %}
-<div class="content-container">
+<div class="content-container" id="reestr_top">
+    <h3>Реестр аттестаций персонала сварочного производства нашего АЦ</h3>
   <div class="row">
     <div class="col-xs-12 col-lg-2">
-      <h3>Реестр аттестаций персонала сварочного производства нашего АЦ</h3>
-      <h4>Ниже будет фильтр</h4>
+      <h4>Поиск по записям</h4>
+              <form method="post">
+                <div class="form-group">
+                  <label for="FIO_field">ФИО аттестуемого</label>
+                  <input type="text" class="form-control" name="fio" id="FIO_field">
+                  <small id="emailHelp" class="form-text text-muted">Реестр обновляется 1 раз в сутки</small>
+                </div>
+                <div class="form-group">
+                  <label for="work_place_field">Место работы</label>
+                  <input type="text" class="form-control" name="work_place" id="work_place_field">
+                </div>
+                <button type="submit" class="btn btn-primary" name="search_in_registry_button">Поиск</button>
+              </form>
     </div>
     <div class="col-xs-12 col-lg-10">
-            <nav aria-label="Page navigation example">
-                  <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="#">Предыдущая</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Следующая</a></li>
-                  </ul>
-                  </nav>
-              <div class="table-responsive-xl registry-table">
-                <table class="table table-striped table-bordered">
-                      <thead>
-                            <th>ФИО</th>
-                            <th>Место работы</th>
-                            <th>Должность</th>
-                            <th>Номер удостоверения</th>
-                            <th>Область аттестации</th>
-                            <th>Срок действия</th>
-                      </thead>
-                       <tbody>
-                          {% if records %}
-                            {% for record in records %}
-                            <tr>
-                                <td>{{ record.fio }}</td>
-                                <td>{{ record.company }}</td>
-                                <td>{{ record.position }}</td>
-                                <td>{{ record.udost }}</td>
-                                <td>{{ record.vid_d}} - {{record.obl_att}}</td>
-                                <td>от {{ record.date_create }} до {{ record.active_to }}</td>
-                            </tr>
-                            {% endfor %}
-                          {% else %}
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                          {% endif %}
-                </table>
-              </div>
-            <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Предыдущая</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Следующая</a></li>
-                        </ul>
-                        </nav>
-            </div>
-        </div>
-        </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if records.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ records.previous_page_number }}#reestr_top"><i class="fas fa-arrow-left"></i></a>
+          </li>
+          {% endif %}
+          <li class="page-item">
+            <a class="page-link">{{ records.number }} из {{ records.paginator.num_pages }}</a>
+          </li>
+          {% if records.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ records.next_page_number }}#reestr_top"><i class="fas fa-arrow-right"></i></a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      <div class="table-responsive-xl registry-table">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <th>ФИО</th>
+            <th>Место работы</th>
+            <th>Должность</th>
+            <th>Номер удостоверения</th>
+            <th>Область аттестации</th>
+            <th>Срок действия</th>
+          </thead>
+          <tbody>
+            {% if records %} {% for record in records %}
+            <tr>
+              <td>{{ record.fio }}</td>
+              <td>{{ record.company }}</td>
+              <td>{{ record.position }}</td>
+              <td>{{ record.udost }}</td>
+              <td>{{ record.vid_d }} - {{ record.obl_att }}</td>
+              <td>от {{ record.date_create }} до {{ record.active_to }}</td>
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+              <td>Tiger Nixon</td>
+              <td>System Architect</td>
+              <td>Edinburgh</td>
+              <td>61</td>
+              <td>2011/04/25</td>
+              <td>$320,800</td>
+            </tr>
+            <tr>
+              <td>Garrett Winters</td>
+              <td>Accountant</td>
+              <td>Tokyo</td>
+              <td>63</td>
+              <td>2011/07/25</td>
+              <td>$170,750</td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
       </div>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {% if records.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ records.previous_page_number }}#reestr_top"><i class="fas fa-arrow-left"></i></a>
+          </li>
+          {% endif %}
+          <li class="page-item">
+            <a class="page-link">{{ records.number }} из {{ records.paginator.num_pages }}</a>
+          </li>
+          {% if records.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ records.next_page_number }}#reestr_top"><i class="fas fa-arrow-right"></i></a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

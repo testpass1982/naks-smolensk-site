@@ -86,6 +86,13 @@ class AskQuestionForm(forms.Form):
         initial=True, required=True, widget=forms.CheckboxInput(
             attrs={'class': 'checkmark'}))
 
+
+class SearchRegistryForm(forms.Form):
+    fio = forms.CharField(max_length=64, widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+    work_place = forms.CharField(max_length=64, widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+
     # def clean(self):
     #     document = self.cleaned_data.get('document', None)
     #     if not document:

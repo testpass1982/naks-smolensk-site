@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, PostPhoto, Tag, Category, Document, Article, Message, Contact
 from .models import Staff, Registry
 from .forms import PostForm, ArticleForm, DocumentForm
-from .forms import SendMessageForm, SubscribeForm, AskQuestionForm
+from .forms import SendMessageForm, SubscribeForm, AskQuestionForm, SearchRegistryForm
 from .adapters import MessageModelAdapter
 from .message_tracker import MessageTracker
 from .registry_import import Importer, data_url
@@ -290,11 +290,26 @@ def staff(request):
 
 def reestrsp(request, param=None):
     """registry view for imported database entries"""
+    if request.method == 'POST':
+        form = SearchRegistryForm(request.POST)
+        if form.is_valid:
+            search_request_fio = request.POST['fio']
+            search_request_work_place = request.POST['work_place']
+            search_result = Registry.objects.filter(
+                title__icontains=search_request_fio)
+
+            content = {
+                'records': search_result,
+                'search_form': SearchRegistryForm()
+            }
+
+            return render(request, 'mainapp.reestrsp.html', content)
+
     if request.method == 'GET':
         accept = request.GET.get('import')
         if accept == 'Y':
             imported = Importer(data_url)
-            for i in range(10):
+            for i in range(200):
                 imported.save_data_to_db(imported.data[i])
                 print('DONE IMPORT')
     records = Registry.objects.all().order_by('-created_date')
@@ -303,9 +318,14 @@ def reestrsp(request, param=None):
         att_record = json.loads(record.params)
         att_records.append(att_record)
 
-    if len(att_records) != 0:
+    paginator = Paginator(att_records, 10)
+    page = request.GET.get('page')
+    att_paginated_records = paginator.get_page(page)
+    search_form = SearchRegistryForm()
+    if len(att_paginated_records) != 0:
         content = {
-            'records': att_records
+            'records': att_paginated_records,
+            'search_form': search_form
         }
     else:
         print('empty')
