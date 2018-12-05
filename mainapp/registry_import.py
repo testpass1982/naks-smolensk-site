@@ -26,6 +26,7 @@ class RegistryRecordAdapter:
     def __init__(self, args):
         self.created_date = date_parse(args['date_created'])
         self.title = args['title']
+        self.org = args['org']
         self.typeof = args['typeof']
         self.params = args['params']
         self.status = args['status']
@@ -93,6 +94,7 @@ class Importer:
         args = {
             'date_created': record['date_create'],
             'title': record['fio']+'-'+record['vid_d']+'-'+record['stamp']+'-'+record['date_create'],
+            'org': record['company'],
             'typeof': 'Аттестация персонала',
             'params': json.dumps(record),
             'status': 0

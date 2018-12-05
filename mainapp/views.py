@@ -12,6 +12,7 @@ from .adapters import MessageModelAdapter
 from .message_tracker import MessageTracker
 from .registry_import import Importer, data_url
 import json
+from django.db.models import Q
 # Create your views here.
 
 
@@ -290,42 +291,42 @@ def staff(request):
 
 def reestrsp(request, param=None):
     """registry view for imported database entries"""
-    if request.method == 'POST':
-        form = SearchRegistryForm(request.POST)
+    # if request.GET.et('search2') == 'Y':
+    if 'search' in request.GET:
+        print('GET:', request.GET)
+        form = SearchRegistryForm(request.GET)
         if form.is_valid:
-            search_request_fio = request.POST['fio']
-            search_request_work_place = request.POST['work_place']
-            search_result = Registry.objects.filter(
-                title__icontains=search_request_fio)
+            print('valid')
+            records = Registry.objects.filter(
+                title__icontains=request.GET.get('fio'))
+    else:
+        records = Registry.objects.all().order_by('-created_date')
 
-            content = {
-                'records': search_result,
-                'search_form': SearchRegistryForm()
-            }
+    result_to_page = []
+    for result in records:
+        result_to_page.append(json.loads(result.params))
 
-            return render(request, 'mainapp.reestrsp.html', content)
-
-    if request.method == 'GET':
+    list_of_records = result_to_page
+    if request.GET.get('import'):
         accept = request.GET.get('import')
         if accept == 'Y':
             imported = Importer(data_url)
             for i in range(200):
                 imported.save_data_to_db(imported.data[i])
                 print('DONE IMPORT')
-    records = Registry.objects.all().order_by('-created_date')
-    att_records = []
-    for record in records:
-        att_record = json.loads(record.params)
-        att_records.append(att_record)
 
-    paginator = Paginator(att_records, 10)
+    if request.method == "GET":
+        print('GET:', request.GET)
     page = request.GET.get('page')
-    att_paginated_records = paginator.get_page(page)
+    paginator = Paginator(list_of_records, 10)
+    paginated_records = paginator.get_page(page)
     search_form = SearchRegistryForm()
-    if len(att_paginated_records) != 0:
+    page_url = request.build_absolute_uri()
+    if len(paginated_records) != 0:
         content = {
-            'records': att_paginated_records,
-            'search_form': search_form
+            'records': paginated_records,
+            'search_form': search_form,
+            'page_url': page_url
         }
     else:
         print('empty')

@@ -88,9 +88,9 @@ class AskQuestionForm(forms.Form):
 
 
 class SearchRegistryForm(forms.Form):
-    fio = forms.CharField(max_length=64, widget=forms.TextInput(
+    fio = forms.CharField(max_length=64, required=False, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
-    work_place = forms.CharField(max_length=64, widget=forms.TextInput(
+    work_place = forms.CharField(max_length=64, required=False, widget=forms.TextInput(
         attrs={'class': 'form-control'}))
 
     # def clean(self):
