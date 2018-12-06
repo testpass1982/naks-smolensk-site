@@ -13,6 +13,8 @@ from .message_tracker import MessageTracker
 from .registry_import import Importer, data_url
 import json
 from .utilites import UrlMaker
+from django.db.models import Q
+
 # Create your views here.
 
 
@@ -297,8 +299,9 @@ def reestrsp(request, param=None):
         form = SearchRegistryForm(request.GET)
         if form.is_valid:
             print('valid')
+            search_form = form
             records = Registry.objects.filter(
-                title__icontains=request.GET.get('fio'))
+                Q(title__contains=request.GET.get('fio')), Q(org__contains=request.GET.get('work_place')))
     else:
         records = Registry.objects.all().order_by('-created_date')
 
@@ -327,12 +330,15 @@ def reestrsp(request, param=None):
     print('CURRENT', urlmaker.current)
 
     if len(paginated_records) != 0:
+
         content = {
             'records': paginated_records,
             'search_form': search_form,
-            'urls': urlmaker.urls_dict
+            'urls': urlmaker.urls_dict,
         }
     else:
         print('empty')
         content = None
+
+    print(content)
     return render(request, 'mainapp/reestr-sasv.html', content)

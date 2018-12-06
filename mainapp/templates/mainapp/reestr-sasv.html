@@ -1,22 +1,26 @@
 {% extends 'mainapp/base.html' %} {% block content %}
 <div class="content-container" id="reestr_top">
-    <h3>Реестр аттестаций персонала сварочного производства нашего АЦ</h3>
+  <h3>Реестр аттестаций персонала сварочного производства нашего АЦ</h3>
   <div class="row">
     <div class="col-xs-12 col-lg-2">
       <h4>Поиск по записям</h4>
-              <form method="get" action="#reestr_top">
-                {% comment %} <input type="hidden" name="search2" value="Y"> {% endcomment %}
-                <div class="form-group">
-                  <label for="FIO_field">ФИО аттестуемого</label>
-                 {{ search_form.fio }}
-                  <small id="emailHelp" class="form-text text-muted">Реестр обновляется 1 раз в сутки</small>
-                </div>
-                <div class="form-group">
-                  <label for="work_place_field">Место работы</label>
-                  {{ search_form.work_place }}
-                </div>
-                <button type="submit" class="btn btn-primary" name="search">Поиск</button>
-              </form>
+      <form method="get" action="#reestr_top">
+        {% comment %} <input type="hidden" name="search2" value="Y"> {% endcomment %}
+        <div class="form-group">
+          <label for="FIO_field">ФИО аттестуемого</label>
+          {{ search_form.fio }}
+          <small id="emailHelp" class="form-text text-muted">Реестр обновляется 1 раз в сутки</small>
+        </div>
+        <div class="form-group">
+          <label for="work_place_field">Место работы</label>
+          {{ search_form.work_place }}
+        </div>
+        <button type="submit" class="btn btn-primary" name="search">Поиск</button>
+        {% if 'search' in request.build_absolute_uri %}
+        <a href="{% url 'reestrsp' %}#reestr_top" class="btn btn-link" name='reset_form'>Сбросить</a>
+        {% endif %}
+
+      </form>
     </div>
     <div class="col-xs-12 col-lg-10">
       <nav aria-label="Page navigation example">
@@ -54,25 +58,11 @@
               <td>{{ record.position }}</td>
               <td>{{ record.udost }}</td>
               <td>{{ record.vid_d }} - {{ record.obl_att }}</td>
-              <td>от {{ record.date_create }} до {{ record.active_to }} {% if record.active_long %} Продление до: {{ record.active_long }}{% endif %}</td>
+              <td>от {{ record.date_create }} до {{ record.active_to }} {% if record.active_long %} Продление до: {{
+                record.active_long }}{% endif %}</td>
             </tr>
             {% endfor %} {% else %}
-            <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011/04/25</td>
-              <td>$320,800</td>
-            </tr>
-            <tr>
-              <td>Garrett Winters</td>
-              <td>Accountant</td>
-              <td>Tokyo</td>
-              <td>63</td>
-              <td>2011/07/25</td>
-              <td>$170,750</td>
-            </tr>
+            <div class="alert alert-warning">Ничего не найдено</div>
             {% endif %}
           </tbody>
         </table>
