@@ -12,7 +12,7 @@ from .adapters import MessageModelAdapter
 from .message_tracker import MessageTracker
 from .registry_import import Importer, data_url
 import json
-from django.db.models import Q
+from .utilites import UrlMaker
 # Create your views here.
 
 
@@ -291,7 +291,7 @@ def staff(request):
 
 def reestrsp(request, param=None):
     """registry view for imported database entries"""
-    # if request.GET.et('search2') == 'Y':
+    search_form = SearchRegistryForm()
     if 'search' in request.GET:
         print('GET:', request.GET)
         form = SearchRegistryForm(request.GET)
@@ -320,13 +320,17 @@ def reestrsp(request, param=None):
     page = request.GET.get('page')
     paginator = Paginator(list_of_records, 10)
     paginated_records = paginator.get_page(page)
-    search_form = SearchRegistryForm()
     page_url = request.build_absolute_uri()
+    urlmaker = UrlMaker(page_url, paginated_records)
+    urlmaker.make_next_url()
+    urlmaker.make_prev_url()
+    print('CURRENT', urlmaker.current)
+
     if len(paginated_records) != 0:
         content = {
             'records': paginated_records,
             'search_form': search_form,
-            'page_url': page_url
+            'urls': urlmaker.urls_dict
         }
     else:
         print('empty')
