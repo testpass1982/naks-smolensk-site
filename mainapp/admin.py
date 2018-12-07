@@ -4,7 +4,7 @@ from django.utils.encoding import force_text
 from django.utils.html import format_html
 
 from .models import Post, Category, Tag, Document, PostPhoto, Article, Message, Contact
-from .models import Staff, Registry
+from .models import Staff, Registry, Menu
 # Register your models here.
 
 
@@ -62,8 +62,11 @@ class DocumentInline(admin.StackedInline):
     fields = ['id', "title", 'document']
     list_display = ['title', 'publish_on_main_page']
 
+
 def get_tag_list(obj):
     return [tag.name for tag in obj.tags.all()]
+
+
 get_tag_list.allowtags = True
 get_tag_list.short_description = 'Список тэгов'
 
@@ -121,3 +124,4 @@ admin.site.register(Category)
 admin.site.register(Contact)
 admin.site.register(Staff)
 admin.site.register(Registry)
+admin.site.register(Menu)

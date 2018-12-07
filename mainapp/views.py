@@ -8,6 +8,7 @@ from .models import Post, PostPhoto, Tag, Category, Document, Article, Message, 
 from .models import Staff, Registry
 from .forms import PostForm, ArticleForm, DocumentForm
 from .forms import SendMessageForm, SubscribeForm, AskQuestionForm, SearchRegistryForm
+from django.contrib.auth.decorators import login_required
 from .adapters import MessageModelAdapter
 from .message_tracker import MessageTracker
 from .registry_import import Importer, data_url
@@ -104,8 +105,6 @@ def news(request):
 
 def details(request, pk=None, content=None):
 
-    print(request.resolver_match)
-    print(request.resolver_match.url_name)
     return_link = HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
     if request.GET:
@@ -149,6 +148,7 @@ def details(request, pk=None, content=None):
     return render(request, 'mainapp/page_details.html', context)
 
 
+@login_required
 def create_factory(request, content_type):
 
     form_name_select = {

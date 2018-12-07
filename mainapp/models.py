@@ -251,3 +251,16 @@ class Registry(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Menu(models.Model):
+    title = models.CharField(u'Заголовок меню', max_length=60)
+    url = models.URLField(u'Адрес ссылки', max_length=200)
+    order = models.SmallIntegerField(u'Порядок вывода')
+
+    class Meta:
+        verbose_name = "Ссылка меню"
+        verbose_name_plural = "Ссылки меню"
+
+    def __str__(self):
+        return self.title

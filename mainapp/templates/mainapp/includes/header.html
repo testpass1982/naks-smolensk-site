@@ -1,41 +1,76 @@
 <!--header-start-->
+{% load static %}
 <div class="header__top-addr-line d-print-none">
-        <div class="header__container container-fluid">
-                <div class="row justify-content-between no-margins">
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="header__top-addr-line-text"><i class="fas fa-map-marker-alt"></i>
-                            214000, город Смоленск, Краснинское шоссе 21, офис 2</div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="header__top-addr-line-text text-center highlighted">Время работы с
-                            09:00 до 19:00</div>
-                    </div>
-                    <div class="col-xs-12 col-sm-4">
-                        <div class="header__top-addr-line-text text-right text-sm-center">ООО
-                            "НАКС-Смоленск" в реестрах НАКС:
-                            <strong>АЦСТ-126 </strong></div>
+    <div class="header__container container-fluid">
+        <div class="row justify-content-between no-margins">
+            <div class="col-xs-12 col-md-6 col-lg-4">
+                <div class="header__top-addr-line-text">
+                    <a href="https://yandex.ru/maps/-/CBF8B4RAPA" target="_blank"><i class="fas fa-map-marker-alt"></i>214000,
+                        город Смоленск, Краснинское шоссе 21, офис 2</a></div>
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-3">
+                <div class="header__top-addr-line-text text-center highlighted">Время работы с
+                    09:00 до 19:00</div>
+            </div>
+            <div class="col-xs-12 col-md-12 col-lg-5">
+                <div class="header__top-addr-line-text text-right text-sm-center">
+                    <div class="container-fluid d-flex flex-row align-items-center justify-content-center justify-content-lg-end">
+                        <p class="header__registry_id">
+                            ООО "НАКС-Смоленск" в реестрах НАКС:
+                        </p>
+                        <div class="dropdown show header__registry_dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                МР-29АЦ
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="http://naks.ru/assp/reestrac/index.php?ID=540595980"
+                                    target="_blank">МР-29АЦ</a>
+                                <a class="dropdown-item" href="http://naks.ru/specpod/racsp/index.php?ID=540595987"
+                                    target="_blank">МР-23ЦСП</a>
+                                <a class="dropdown-item" href="http://naks.ru/aso/racso/index.php?ID=540595988" target="_blank">АЦСО-109</a>
+                                <a class="dropdown-item" href="http://naks.ru/ast/racst/index.php?ID=540595990" target="_blank">АЦСТ-126</a>
+                                <a class="dropdown-item" href="http://spks.naks.ru/cert/reestr_centers/detail.php?ID=2712346"
+                                    target="_blank">ЦОК-043</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="header__white-sub-header d-print-none">
-        <div class="row justify-content-between no-margins align-items-center">
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                    <div class="logo"><a href="/"><img src="/static/img/logo_for_white_header.png" alt="НАКС НАКС-Смоленск"></a></div>
+</div>
+</div>
+<div class="header__white-sub-header d-print-none">
+    <div class="row justify-content-between no-margins align-items-center">
+         <div class="col-xs-12 col-sm-8 col-md-9 col-lg-6">
+            <div class="d-flex justify-content-around flex-wrap mb-3 mt-3">
+                <div class="d-flex justify-content-sm-between justify-content-lg-around">
+                    <div class="logo mr-3 mb-2"><a href="{% url 'main' %}"><img src="{% static '/img/logo_for_white_header.png' %}" alt="НАКС НАКС-Смоленск"></a></div>
+                    <div class="logo mr-2 mb-2"><a href="{% url 'main' %}"><img src="{% static '/img/naks-smolensg-logo-upd.png' %}" alt="НАКС НАКС-Смоленск"></a></div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                    <div class="subheader__org-phone">8 (4812) 21-40-72</div>
+                <div class="flex-fill d-flex justify-content-sm-between justify-content-lg-around">
+                    <div class="logo mr-1 data-toggle="tooltip" data-placement="right" title="Премия правительства РФ в области качества"><a
+                            href="http://naks.ru" target="_blank"><img src="{% static '/img/logo-round-quality.png' %}" alt="НАКС НАКС-Смоленск"></a></div>
+                    <div class="logo mr-1" data-toggle="tooltip" data-placement="right" title="Премия СНГ в области качества"><a
+                            href="http://naks.ru" target="_blank"><img src="{% static '/img/logo-round-sng.png' %}" alt="НАКС НАКС-Смоленск"></a></div>
+                    <div class="logo mr-1 data-toggle=" tooltip" data-placement="right" title="Международный институт сварки"><a
+                            href="http://naks.ru" target="_blank"><img src="{% static '/img/logo-round-iiw.png' %}" alt="НАКС НАКС-Смоленск"></a></div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2">
-                    <div class="subheader__org-email text-center"><a href="mailto:info@naks-smolensk.ru">info@naks-smolensk.ru</a></div>
-                </div>
-                <div class="col-xs-12 col-md-12 col-lg-4">
-                        <div class="disp-flex">
-                            <div class="subheader__send-message-button" id="button_send_message">Оставить заявку</div>
-                           <a class="subheader__edo-naks-login-button" href="https://ac.naks.ru" target="blank"><i class="fas fa-sign-in-alt"></i>Войти в систему</a>
-                        </div>
-                    </div>
-        </div> <!-- sub-header-end -->
-    </div>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+            <div class="subheader__org-phone">8 (4812) 21-40-72</div>
+            <div class="subheader__org-email">info@naks-smolensk.ru</div>
+        </div>
+        <div class="col-xs-12 col-md-12 col-lg-4">
+            <div class="disp-flex">
+                <div class="subheader__send-message-button" id="button_send_message">Оставить заявку</div>
+                <a class="subheader__edo-naks-login-button" href="https://ac.naks.ru" target="blank"><i class="fas fa-sign-in-alt"></i>Войти
+                    в систему</a>
+            </div>
+        </div>
+    </div> <!-- sub-header-end -->
+</div>
 <!--header-end-->

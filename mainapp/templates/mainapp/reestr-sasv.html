@@ -58,8 +58,8 @@
               <td>{{ record.position }}</td>
               <td>{{ record.udost }}</td>
               <td>{{ record.vid_d }} - {{ record.obl_att }}</td>
-              <td>от {{ record.date_create }} до {{ record.active_to }} {% if record.active_long %} Продление до: {{
-                record.active_long }}{% endif %}</td>
+              <td>от {{ record.date_create }} <br>до {{ record.active_to }} {% if record.active_long %} <br>Продлено до: 
+              {{ record.active_long }}{% endif %}</td>
             </tr>
             {% endfor %} {% else %}
             <div class="alert alert-warning">Ничего не найдено</div>

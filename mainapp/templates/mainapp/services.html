@@ -1,6 +1,6 @@
 {% extends 'mainapp/base.html' %}
 {% block content %}
-<div class="content-container">
+<div class="content-container" id="services_top">
 	<div class="card-group mb-3">
 		<div class="card">
 			<img class="card-img-top" src="/static/img/welder1.jpg" alt="Welder1">
@@ -8,7 +8,7 @@
 				<h5 class="card-title">Аттестация персонала сварочного производства</h5>
 				<p class="card-text">Мы осуществляем аттестацию сварщиков и специалистов сварочного производства</p>
 				<p class="card-text"><normal class="text-primary">Подробная информация и порядок оказания данной услуги: ссылка</normal></p>
-				<p class="card-text"><normal class="text-primary">Реестр аттестаций персонала сварочного производства нашего центра</normal></p>
+				<p class="card-text"><normal class="text-primary"><a href="{% url 'reestrsp' %}#reestr_top">Реестр аттестаций персонала сварочного производства нашего центра</a></normal></p>
 			</div>
 		</div>
 		<div class="card">

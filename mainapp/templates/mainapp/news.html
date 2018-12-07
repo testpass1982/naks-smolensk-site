@@ -2,12 +2,14 @@
 
 
 {% block content %}
-<div class="content-container">
+<div class="content-container" id="newstop">
     <div class="d-flex align-items-center">
         <a class="go-to-the-main-page--button" href="{% url 'main' %}"><i class="fas fa-arrow-left"></i> На главную</a>
+        {% if user.is_authenticated %}
         <a href="{% url 'create' 'post' %}" class="btn btn-link">Создать новость</a>
         <a href="{% url 'create' 'article' %}" class=" btn btn-link">Создать статью</a>
         <a href="{% url 'create' 'document' %}" class="btn btn-link">Загрузить документ</a>
+        {% endif %}
     </div>
 
     <div class="container-fluid">

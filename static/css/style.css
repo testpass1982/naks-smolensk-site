@@ -180,13 +180,16 @@ body {
 .underlined {
   border-bottom: 2px solid #fff;
 }
+
 .underlined:hover {
   border-bottom: 2px solid #609eef;
 }
+
 @media screen and (max-width: 1252px) {
   .underlined {
     border-bottom: transparent;
   }
+
   .underlined:hover {
     background-color: rgba(255, 255, 255, 0.2);
     border-bottom: transparent;
@@ -216,6 +219,19 @@ body {
   white-space: normal;
   padding: 10px 0px 10px 0px;
 }
+
+.header__top-addr-line a,
+.header__top-addr-line:visited {
+  color: #89929d;
+}
+
+.header__registry_id {
+  padding: 0px 10px;
+  margin-bottom: 0px;
+}
+
+.header__registry_dropdown {}
+
 @media screen and (max-width: 576px) {
   .header__top-addr-line-text {
     text-align: center;
@@ -240,12 +256,13 @@ body {
 
 .subheader__org-phone {
   font-weight: bold;
-  padding: 0px 10px;
+  /* padviewding: 0px 10px; */
   line-height: 30px;
   text-align: center;
   white-space: nowrap;
 }
 
+.subheader__org-email,
 .subheader__org-email a {
   text-decoration: none;
   color: #787878;
@@ -274,10 +291,12 @@ body {
   flex: 1 1;
   margin: 10px;
 }
+
 .subheader__send-message-button:hover {
   background-color: #797979;
   color: white;
 }
+
 @media screen and (max-width: 450px) {
   .subheader__send-message-button {
     flex: 1 1 100%;
@@ -296,10 +315,12 @@ body {
   flex: 1 1;
   margin: 10px;
 }
+
 .subheader__edo-naks-login-button:hover {
   background-color: #0173cc;
   color: white;
 }
+
 @media screen and (max-width: 450px) {
   .subheader__edo-naks-login-button {
     flex: 1 1 100%;
@@ -312,6 +333,7 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
 @media screen and (min-width: 900px) {
   .main-content__nav-menu {
     padding: 0px 10px;
@@ -328,6 +350,7 @@ body {
   white-space: nowrap;
   flex: 1 1;
 }
+
 .main-content__nav-menu--menu-item:hover {
   border-bottom: 3px solid #2d7de6;
   text-decoration: none;
@@ -343,14 +366,17 @@ body {
     color: white;
     font-weight: bold;
   }
+
   .main-content__nav-menu--menu-item:hover {
     border: none;
   }
+
   .main-content__nav-menu--menu-item:not(:first-child) {
     display: none;
     background-color: #797979;
     color: white;
   }
+
   .main-content__nav-menu--menu-item:not(:first-child):hover {
     background-color: silver;
     color: #074da7;
@@ -368,6 +394,7 @@ body {
   justify-content: space-between;
   margin-bottom: 30px;
 }
+
 @media screen and (max-width: 900px) {
   .main-content__nav-menu--container {
     margin-left: -15px;
@@ -390,6 +417,7 @@ body {
 .fixed-fix {
   display: none;
 }
+
 @media screen and (max-width: 900px) {
   .fixed-fix {
     display: block;
@@ -405,11 +433,13 @@ body {
   margin-top: -25px;
   padding-right: 15px;
 }
+
 @media screen and (max-width: 1150px) {
   .search-input-contain-container {
     margin-top: -10px;
   }
 }
+
 @media screen and (max-width: 900px) {
   .search-input-contain-container {
     margin-top: 20px;
@@ -428,6 +458,7 @@ body {
   padding: 5px 5px 5px 40px;
   border: none;
 }
+
 .main-content__search-input::placeholder {
   color: #a8a8a8;
 }
@@ -448,6 +479,7 @@ body {
   display: none;
   background-color: #0173cc;
 }
+
 @media screen and (max-width: 900px) {
   .burger-icon {
     display: block;
@@ -459,11 +491,11 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  background: url("/static/img/main_cont__cont-bg-image.jpg") center center
-    no-repeat;
+  background: url("/static/img/main_cont__cont-bg-image.jpg") center center no-repeat;
   background-size: cover;
   margin-bottom: 30px;
 }
+
 .main-content:before {
   content: "";
   position: absolute;
@@ -474,14 +506,17 @@ body {
   background-image: linear-gradient(-27deg, #919bad 0%, #182446 100%);
   opacity: 0.6;
 }
+
 @media screen and (max-width: 500px) {
   .main-content {
     background-image: none;
   }
+
   .main-content:before {
     background-image: linear-gradient(-27deg, #074da7 20%, #1272d1 100%);
     opacity: 0.6;
   }
+
   .main-content .main-content__org_info--naks-member-text {
     color: white;
   }
@@ -529,12 +564,14 @@ body {
   border-radius: 3px;
   flex-basis: 46%;
 }
+
 @media screen and (max-width: 576px) {
   .main-content__org_info--org-activities {
     flex-basis: 95%;
     flex-grow: 1;
   }
 }
+
 .main-content__org_info--org-activities:hover {
   background-color: #ffd07b;
   color: #074da7;
@@ -564,6 +601,7 @@ body {
   border-radius: 3px;
   flex: 2 1 60%;
 }
+
 .main-content__org_info--attention:hover {
   border-radius: 3px;
   background-color: #ffd07b;
@@ -601,6 +639,7 @@ body {
   border-radius: 3px;
   color: white;
 }
+
 .main-content__org_info--button:hover {
   text-decoration: none;
   background-color: white;
@@ -614,9 +653,11 @@ body {
   border-top: 1px solid #97c2fa;
   padding-bottom: 29px;
 }
+
 .news__news-heading:hover {
   border-color: #408ff6;
 }
+
 .news__news-heading:hover .news__line-rect {
   border-color: #408ff6;
 }
@@ -649,6 +690,7 @@ body {
   padding: 10px 14px 10px 14px;
   margin: 23px 0px 0px 31px;
 }
+
 .news__button--read-more:hover {
   background-color: gray;
   border-color: gray;
@@ -669,6 +711,7 @@ body {
 .news__date {
   flex: 1 0;
 }
+
 @media screen and (max-width: 380px) {
   .news__date {
     flex: 1 0 100%;
@@ -679,6 +722,7 @@ body {
   text-align: right;
   flex: 1 0;
 }
+
 @media screen and (max-width: 380px) {
   .news__tag {
     flex: 1 0 100%;
@@ -689,6 +733,7 @@ body {
 .news__news-record-with-picture {
   position: relative;
 }
+
 .news__news-record-with-picture:before {
   content: "";
   top: 0;
@@ -727,6 +772,7 @@ body {
   bottom: 0;
   left: 30px;
 }
+
 .news__news-record-with-picture--button:hover {
   text-decoration: none;
   color: white;
@@ -772,6 +818,7 @@ body {
   max-width: 107px;
   flex-grow: 1;
 }
+
 .news__article-record__read-more-button:hover {
   background-color: #56668f;
   color: white;
@@ -797,13 +844,16 @@ body {
 .underlined {
   border-bottom: 2px solid #fff;
 }
+
 .underlined:hover {
   border-bottom: 2px solid #609eef;
 }
+
 @media screen and (max-width: 1252px) {
   .underlined {
     border-bottom: transparent;
   }
+
   .underlined:hover {
     background-color: rgba(255, 255, 255, 0.2);
     border-bottom: transparent;
@@ -830,6 +880,7 @@ body {
   background-position: center top;
   display: block;
 }
+
 @media screen and (max-width: 540px) {
   .footer__bewelder-ad-footer {
     background: none;
@@ -912,6 +963,7 @@ body {
   flex: 0 0 40%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 .footer__ask-question--button:hover {
   cursor: pointer;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
@@ -961,6 +1013,7 @@ body {
   flex: 0 0 40%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 .footer__bewelder-area-find-job--button:hover {
   text-decoration: none;
   color: black;
@@ -974,6 +1027,7 @@ body {
   line-height: 28px;
   letter-spacing: 0.48px;
 }
+
 .footer__welding-magazine-area--heading:hover {
   text-shadow: 0px 0px 30px rgba(255, 255, 255, 0.8);
 }
@@ -1044,9 +1098,11 @@ body {
   letter-spacing: 1.5px;
   line-height: 26px;
 }
+
 .main-footer--menu-li:hover {
   text-shadow: 1px 1px 20px white;
 }
+
 @media screen and (max-width: 768px) {
   .main-footer--menu-li {
     display: inline-block;
@@ -1081,6 +1137,7 @@ body {
   flex-basis: 60%;
   margin-bottom: 10px;
 }
+
 .main-footer__subscribe-email--input::placeholder {
   color: #a8a8a8;
 }
@@ -1105,6 +1162,7 @@ body {
   cursor: pointer;
   text-decoration: none;
 }
+
 .main-footer__subscribe--button:hover {
   /* border: 1px solid #fff; */
   border-color: white;
@@ -1127,6 +1185,7 @@ body {
   /* Hide the browser's default checkbox */
   /* On mouse-over, add a grey background color */
 }
+
 .checkbox-container input {
   position: absolute;
   opacity: 0;
@@ -1134,15 +1193,19 @@ body {
   height: 0;
   width: 0;
 }
-.checkbox-container:hover input ~ .checkmark {
+
+.checkbox-container:hover input~.checkmark {
   background-color: #727272;
 }
-.checkbox-container input:checked ~ .checkmark {
+
+.checkbox-container input:checked~.checkmark {
   background-color: #2196f3;
 }
-.checkbox-container input:checked ~ .checkmark:after {
+
+.checkbox-container input:checked~.checkmark:after {
   display: block;
 }
+
 .checkbox-container .checkmark:after {
   left: 7px;
   top: 3px;
@@ -1166,6 +1229,7 @@ body {
   border-radius: 3px;
   /* Create the checkmark/indicator (hidden when not checked) */
 }
+
 .checkmark:after {
   content: "";
   position: absolute;
@@ -1230,6 +1294,7 @@ body {
   text-align: center;
   flex: 0 0 30%;
 }
+
 .main-footer__contacts-send-message--button:hover {
   color: black;
   background-color: white;
@@ -1246,6 +1311,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
 @media screen and (max-width: 992px) {
   .sub-footer__naks-media-logo--container {
     justify-content: center;
@@ -1285,6 +1351,7 @@ body {
   border: 1px solid #fffde5;
   border-radius: 3px;
 }
+
 @media screen and (max-width: 720px) {
   .modal-content {
     max-width: 95%;
@@ -1337,6 +1404,7 @@ body {
   background-color: white;
   width: 100%;
 }
+
 @media screen and (max-device-width: 425px) {
   .modal__form_container {
     padding-top: 20px;
@@ -1390,6 +1458,7 @@ body {
   border-style: solid;
   border-color: transparent;
 }
+
 .form__button:hover {
   box-shadow: 0px 0px 20px 0px rgba(33, 150, 243, 0.8);
 }
@@ -1429,6 +1498,7 @@ body {
   width: 150px;
   text-align: center;
 }
+
 .go-to-the-main-page--button:hover {
   color: white;
   background-color: gray;
@@ -1444,6 +1514,7 @@ body {
   width: 150px;
   text-align: center;
 }
+
 .go-to-the-main-page--button:hover {
   color: white;
   background-color: gray;
@@ -1501,6 +1572,7 @@ body {
   letter-spacing: 0.28px;
   padding-bottom: 10px;
 }
+
 .news-details--social--buttons--container {
   display: flex;
   flex-flow: row wrap;
@@ -1515,6 +1587,7 @@ body {
   text-align: center;
   flex: 1 1 100%;
 }
+
 .news-details-social-button {
   flex-grow: 0;
   padding: 5px;
@@ -1538,6 +1611,7 @@ body {
   white-space: nowrap;
   /* max-width: 180px; */
 }
+
 .news-details-attached-doc-button:hover {
   color: white;
   background-color: gray;
@@ -1547,9 +1621,11 @@ body {
   padding: 10px 10px 10px 10px;
   background-color: rgba(232, 232, 232, 0.7);
 }
+
 .news-details-photos-container a {
   display: block;
 }
+
 @media screen and (min-width: 600px) and (max-width: 1199px) {
   .news-details-photos-container a {
     flex: 1 0;
@@ -1562,6 +1638,7 @@ body {
   object-fit: contain;
   flex: 1 0 33%;
 }
+
 .news-details-atteched-image:hover {
   opacity: 0.8;
   transition: 0.3s;
