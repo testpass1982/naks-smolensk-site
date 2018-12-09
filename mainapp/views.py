@@ -295,7 +295,6 @@ def reestrsp(request, param=None):
     """registry view for imported database entries"""
     search_form = SearchRegistryForm()
     if 'search' in request.GET:
-        print('GET:', request.GET)
         form = SearchRegistryForm(request.GET)
         if form.is_valid:
             print('valid')
@@ -310,6 +309,8 @@ def reestrsp(request, param=None):
         result_to_page.append(json.loads(result.params))
 
     list_of_records = result_to_page
+    
+    """import data from data-url using token"""
     if request.GET.get('import'):
         accept = request.GET.get('import')
         if accept == 'Y':
@@ -318,19 +319,18 @@ def reestrsp(request, param=None):
                 imported.save_data_to_db(imported.data[i])
                 print('DONE IMPORT')
 
-    if request.method == "GET":
-        print('GET:', request.GET)
     page = request.GET.get('page')
     paginator = Paginator(list_of_records, 10)
     paginated_records = paginator.get_page(page)
     page_url = request.build_absolute_uri()
+
+    """making next and previous page urls"""
     urlmaker = UrlMaker(page_url, paginated_records)
     urlmaker.make_next_url()
     urlmaker.make_prev_url()
     print('CURRENT', urlmaker.current)
 
     if len(paginated_records) != 0:
-
         content = {
             'records': paginated_records,
             'search_form': search_form,
@@ -340,5 +340,4 @@ def reestrsp(request, param=None):
         print('empty')
         content = None
 
-    print(content)
     return render(request, 'mainapp/reestr-sasv.html', content)

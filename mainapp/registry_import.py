@@ -34,12 +34,11 @@ class RegistryRecordAdapter:
 
 class RegistryRecordMapper:
     """relation between RegistryRecords objects and database"""
-    pass
 
     def find_by(self, params, record):
         pass
 
-    def check_by_params(self, record):
+    def check_if_exist(self, record):
         try:
             Registry.objects.get(title=record.title)
             print('Found')
@@ -90,7 +89,7 @@ class Importer:
         pass
 
     def save_data_to_db(self, record):
-        """save every data record to DB through RegistryRecordAdapter"""
+        """save every data record to DB using RegistryRecordAdapter"""
         args = {
             'date_created': record['date_create'],
             'title': record['fio']+'-'+record['vid_d']+'-'+record['stamp']+'-'+record['date_create'],
@@ -102,8 +101,10 @@ class Importer:
         adapted_record = RegistryRecordAdapter(args)
         print(adapted_record.__dict__)
         record = Registry(**adapted_record.__dict__)
-        if self.mapper.check_by_params(record):
+        if self.mapper.check_if_exist(record):
+            """check if record already there"""
             print('Already there', record.title)
         else:
+            """if not - insert with mapper method"""
             self.mapper.insert(record)
             print('SAVED NEW RECORD', record.title)

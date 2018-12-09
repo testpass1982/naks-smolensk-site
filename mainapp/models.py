@@ -11,7 +11,8 @@ from django.core.validators import FileExtensionValidator
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
 from django.urls import reverse
-
+#using this as a store for weld orgs:
+from picklefield.fields import PickledObjectField
 # from django_resized import ResizedImageField
 
 
@@ -233,6 +234,19 @@ class Staff(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.name, self.job)
 
+class Menu(models.Model):
+    """linking main page UI elements with its description"""
+    title = models.CharField(u'Заголовок меню', max_length=60)
+    url = models.URLField(u'Адрес ссылки', max_length=200)
+    order = models.SmallIntegerField(u'Порядок вывода')
+
+    class Meta:
+        verbose_name = "Ссылка меню"
+        verbose_name_plural = "Ссылки меню"
+
+    def __str__(self):
+        return self.title
+
 
 class Registry(models.Model):
     """this is the class to load external registry records"""
@@ -252,15 +266,11 @@ class Registry(models.Model):
     def __str__(self):
         return self.title
 
-
-class Menu(models.Model):
-    title = models.CharField(u'Заголовок меню', max_length=60)
-    url = models.URLField(u'Адрес ссылки', max_length=200)
-    order = models.SmallIntegerField(u'Порядок вывода')
+class WeldData(models.Model):
+    """database agnostic storage for weld-organizations"""
+    title = models.CharField(u'Название', blank=True, max_length=100)
+    uid = models.IntegerField(u'UID', unique=True, blank=True)
+    args = PickledObjectField()
 
     class Meta:
-        verbose_name = "Ссылка меню"
-        verbose_name_plural = "Ссылки меню"
-
-    def __str__(self):
-        return self.title
+        abstract = True

@@ -1,0 +1,12 @@
+{% extends 'mainapp/base.html' %}
+
+
+{% block content %}
+
+{% for welder in welders %}
+
+    {{ welder.title }}:{{ welder.uid}}:{{welder.args.0.certificate}}
+
+{% endfor %}
+
+{% endblock  %}
