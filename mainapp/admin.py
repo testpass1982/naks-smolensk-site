@@ -5,8 +5,9 @@ from django.utils.html import format_html
 
 from .models import Post, Category, Tag, Document, PostPhoto, Article, Message, Contact
 from .models import Staff, Registry, Menu
+
 # from .models import WeldData
-from .domain_model import WeldOrg, Welder
+# from .domain_model import WeldOrg, Welder
 # Register your models here.
 
 
@@ -29,9 +30,8 @@ def get_url(obj):
     # Надо обязательно изменить на боевом сервере адрес ссылки
     if obj.pk:
         return format_html(
-            '<a href="{}" target="_blank">http://127.0.0.0{}</a>'.format(obj.get_absolute_url(),
-                                                                         obj.get_absolute_url())
-        )
+            '<a href="{}" target="_blank">http://127.0.0.0{}</a>'.format(
+                obj.get_absolute_url(), obj.get_absolute_url()))
 
 
 get_url.allow_tags = True
@@ -41,19 +41,24 @@ get_url.short_description = "Ссылка на страницу"
 class PostPhotoInline(admin.StackedInline):
     model = PostPhoto
     extra = 0
-    fields = ['id', "get_edit_link", "title",
-              "image", "position", get_picture_preview]
+    fields = [
+        'id', "get_edit_link", "title", "image", "position",
+        get_picture_preview
+    ]
     readonly_fields = ['id', "get_edit_link", get_picture_preview]
 
     def get_edit_link(self, obj=None):
         if obj.pk:  # if object has already been saved and has a primary key, show link to it
-            url = reverse('admin:%s_%s_change' % (
-                obj._meta.app_label, obj._meta.model_name), args=[force_text(obj.pk)])
+            url = reverse(
+                'admin:%s_%s_change' % (obj._meta.app_label,
+                                        obj._meta.model_name),
+                args=[force_text(obj.pk)])
             return format_html("""<a href="{url}">{text}</a>""".format(
                 url=url,
                 text="Редактировать %s отдельно" % obj._meta.verbose_name,
             ))
         return "(Загрузите фотографию и нажмите \"Сохранить и продолжить редактирование\")"
+
     get_edit_link.short_description = "Изменить"
     get_edit_link.allow_tags = True
 
@@ -95,17 +100,21 @@ class PostAdmin(admin.ModelAdmin):
     # save_on_top = True
     view_on_site = True
 
-    fields = ['id', 'title', 'tags', 'category', 'author', 'short_description', 'text', get_url,
-              'created_date', 'published_date', 'publish_on_main_page', 'publish_on_news_page']
+    fields = [
+        'id', 'title', 'tags', 'category', 'author', 'short_description',
+        'text', get_url, 'created_date', 'published_date',
+        'publish_on_main_page', 'publish_on_news_page'
+    ]
     readonly_fields = ['id', get_url]
-    list_display = ['title', 'category',
-                    'created_date', 'publish_on_main_page', 'publish_on_news_page']
+    list_display = [
+        'title', 'category', 'created_date', 'publish_on_main_page',
+        'publish_on_news_page'
+    ]
     inlines = [PostPhotoInline, DocumentInline]
 
     def view_on_site(self, obj):
-        url = reverse('detailview', kwargs={
-                      'content': 'post', 'pk': obj.pk})
-        return 'http://127.0.0.1:8000'+url
+        url = reverse('detailview', kwargs={'content': 'post', 'pk': obj.pk})
+        return 'http://127.0.0.1:8000' + url
 
 
 @admin.register(PostPhoto)
@@ -127,5 +136,5 @@ admin.site.register(Contact)
 admin.site.register(Staff)
 admin.site.register(Registry)
 admin.site.register(Menu)
-admin.site.register(WeldOrg)
-admin.site.register(Welder)
+# admin.site.register(WeldOrg)
+# admin.site.register(Welder)

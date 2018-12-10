@@ -267,7 +267,7 @@ class Registry(models.Model):
         return self.title
 
 class WeldData(models.Model):
-    """database agnostic storage for weld-organizations"""
+    """database agnostic storage for weld-data"""
     title = models.CharField(u'Название', blank=True, max_length=100)
     uid = models.IntegerField(u'UID', unique=True, blank=True)
     args = PickledObjectField()
