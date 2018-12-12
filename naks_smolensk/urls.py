@@ -18,15 +18,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path, re_path, include
 import mainapp.views as mainapp
-import mainapp.domain_model as domain
+# import mainapp.domain_model as domain
 
 urlpatterns = [
     path('', mainapp.main, name='main'),
     path('news/', mainapp.news, name='news'),
     path('contact/', mainapp.contact, name='contact'),
     re_path(r'details/$', mainapp.details, name='post_details'),
-    path('detailview/<slug:content>/<slug:pk>',
-         mainapp.details, name='detailview'),
+    path(
+        'detailview/<slug:content>/<slug:pk>',
+        mainapp.details,
+        name='detailview'),
     path('create/<slug:content_type>', mainapp.create_factory, name='create'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
@@ -38,9 +40,9 @@ urlpatterns = [
     path('about/', mainapp.about, name="about"),
     path('staff/', mainapp.staff, name='staff'),
     path('reestrsp/', mainapp.reestrsp, name='reestrsp'),
-    path('new_weld_data/', domain.CreateViewMetaclass.as_view(), name='new_data'),
-    path('weld_data_list/', domain.WeldListView.as_view(), name='weld_data_list')
+    # path('new_weld_data/', domain.CreateViewMetaclass.as_view(), name='new_data'),
+    # path('weld_data_list/', domain.WeldListView.as_view(), name='weld_data_list')
 ]
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL,
-                          document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
