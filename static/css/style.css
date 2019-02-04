@@ -1091,7 +1091,8 @@ body {
   padding-inline-start: 0px;
 }
 
-.main-footer--menu-li {
+.main-footer--menu-li, 
+.main-footer--menu-li a {
   list-style: none;
   color: gray;
   font-size: 14px;
